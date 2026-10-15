@@ -229,7 +229,7 @@ button:focus-visible{outline:4px solid var(--amber);outline-offset:2px}
 .vid .frame{position:relative;background:#000;border-radius:calc(18px*var(--s));overflow:hidden;min-height:calc(240px*var(--s));box-shadow:0 14px 40px rgba(18,52,59,.25)}
 .vid .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .vid .grid{align-content:center}
-@media (max-width:760px){.vid{grid-template-columns:1fr}.vid .frame{aspect-ratio:16/9;min-height:0}}
+@media (max-width:760px){.vid{grid-template-columns:1fr}.vid .frame{height:54vw;min-height:0;flex:none}.vid .grid{align-content:start}}
 /* 圖片版位 */
 .withpic{display:grid;grid-template-columns:36% 1fr;gap:calc(22px*var(--s));align-items:stretch;flex:1;min-height:0}
 .withpic .pic{border-radius:calc(20px*var(--s));overflow:hidden;min-height:0;background:var(--soft)}
