@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>好好走完最後一哩路｜失智症末期的照顧選擇與臨終陪伴準備</title>
+<style>
+:root{--orange:#E8552D;--amber:#F4A93C;--teal:#028090;--ink:#12343B;--paper:#FFFFFF;--bg:#F2F6F5;--line:#D3E3E1;--soft:#E6F0EF;--dusk:#5E5A8C;--theme:#028090;--s:1;--hs:1;color-scheme:light}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Microsoft JhengHei","Noto Sans TC","PingFang TC",sans-serif;overflow:hidden;-webkit-text-size-adjust:100%}
+#stage{position:absolute;left:0;right:0;top:env(safe-area-inset-top,0px);bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+.slide{position:absolute;inset:0;display:none;padding:calc(24px*var(--s)) calc(44px*var(--s)) calc(26px*var(--s));overflow:hidden}
+.slide.on{display:flex;flex-direction:column}
+.slide.on.enter{animation:slideIn .55s cubic-bezier(.2,.8,.2,1) both}
+@keyframes slideIn{from{opacity:0}to{opacity:1}}
+.anim{animation:pop .5s cubic-bezier(.2,.9,.3,1.2) both;animation-delay:calc(var(--d,0)*90ms + 150ms)}
+@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+
+/* 旅程列：五站 */
+.road{display:flex;align-items:center;gap:calc(6px*var(--hs));margin-bottom:calc(10px*var(--hs));font-size:calc(17px*var(--hs));color:#6B8086}
+.road .st{display:flex;align-items:center;gap:calc(6px*var(--hs));white-space:nowrap}
+.road .dot{width:calc(16px*var(--hs));height:calc(16px*var(--hs));border-radius:50%;background:var(--line);flex:none}
+.road .st.done .dot{background:var(--teal)}
+.road .st.cur{color:var(--ink);font-weight:700}
+.road .st.cur .dot{background:var(--orange);box-shadow:0 0 0 calc(5px*var(--hs)) rgba(232,85,45,.18);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 calc(9px*var(--hs)) rgba(232,85,45,.06)}}
+.road .seg{flex:1;height:calc(3px*var(--hs));background:var(--line);border-radius:3px;min-width:calc(10px*var(--hs))}
+.road .seg.done{background:var(--teal)}
+
+.tag{display:inline-block;background:var(--theme);color:#fff;font-weight:700;font-size:calc(20px*var(--hs));padding:calc(3px*var(--hs)) calc(16px*var(--hs));border-radius:999px;align-self:flex-start}
+h1{font-size:calc(46px*var(--hs));line-height:1.3;margin:calc(8px*var(--hs)) 0 calc(6px*var(--hs))}
+.lead{font-size:calc(27px*var(--s));color:#3F5A60;margin:0 0 calc(12px*var(--s));line-height:1.5}
+.body{flex:1;display:flex;flex-direction:column;min-height:0}.body>:first-child{margin-top:auto}.body>:last-child{margin-bottom:auto}
+.note-src{font-size:calc(17px*var(--s));color:#6B8086;margin-top:calc(10px*var(--s))}
+
+/* 封面：一條通往遠方的路 */
+.cover{overflow:hidden;justify-content:center;align-items:center;text-align:center;background:linear-gradient(180deg,#FCE3B8 0%,#F7B98A 38%,#5E8C8E 78%,#12343B 100%)}
+.cover .sun{position:absolute;left:50%;top:44%;width:calc(260px*var(--s));height:calc(260px*var(--s));transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#FFF4DA 0%,rgba(255,244,218,.55) 45%,rgba(255,244,218,0) 70%);animation:glow 5s ease-in-out infinite;pointer-events:none}
+@keyframes glow{50%{transform:translate(-50%,-50%) scale(1.08)}}
+.cover svg.path{position:absolute;left:0;right:0;bottom:0;width:100%;height:42%;pointer-events:none}
+.cover .path .road-line{stroke-dasharray:14 16;animation:march 2.4s linear infinite}
+@keyframes march{to{stroke-dashoffset:-60}}
+.cover .txt{position:relative;z-index:2}
+.cover h1{font-size:calc(76px*var(--hs));color:var(--ink);margin:calc(10px*var(--hs)) 0;letter-spacing:.04em}
+.cover .sub{font-size:calc(28px*var(--s));color:var(--ink);opacity:.85}
+.cover .lead{font-size:calc(34px*var(--s));color:var(--ink);font-weight:700;margin:0}
+.cover .who{display:inline-block;font-size:calc(26px*var(--s));color:#fff;background:rgba(18,52,59,.75);padding:calc(8px*var(--s)) calc(26px*var(--s));border-radius:999px;margin-top:calc(26px*var(--s))}
+
+.section{justify-content:center;align-items:center;text-align:center;background:linear-gradient(160deg,var(--teal) 0%,var(--ink) 100%);color:#fff}
+.section .road{color:rgba(255,255,255,.75);width:min(100%,calc(1100px*var(--s)));margin-bottom:calc(30px*var(--hs))}
+.section .road .dot,.section .road .seg{background:rgba(255,255,255,.28)}
+.section .road .st.cur{color:#fff}
+.section .road .st.done .dot,.section .road .seg.done{background:var(--amber)}
+.section h1{color:#fff;font-size:calc(62px*var(--hs))}
+.section .lead{color:#fff;opacity:.95;font-size:calc(32px*var(--s));max-width:24em}
+.section.final{background:linear-gradient(180deg,#F7B98A 0%,#5E8C8E 60%,#12343B 100%)}
+
+.grid{display:grid;gap:calc(16px*var(--s))}
+.card{background:var(--paper);border:2px solid var(--line);border-radius:calc(18px*var(--s));padding:calc(18px*var(--s)) calc(22px*var(--s));border-top:calc(6px*var(--s)) solid var(--teal)}
+.card .k{font-size:calc(30px*var(--s));font-weight:700;color:var(--theme);line-height:1.3}
+.card .v{font-size:calc(26px*var(--s));line-height:1.5;margin-top:calc(6px*var(--s))}
+.grid .card:nth-child(4n+2){border-top-color:var(--amber)}.grid .card:nth-child(4n+2) .k{color:#A8650A}
+.grid .card:nth-child(4n+3){border-top-color:var(--orange)}.grid .card:nth-child(4n+3) .k{color:#C2411E}
+.grid .card:nth-child(4n+4){border-top-color:var(--dusk)}.grid .card:nth-child(4n+4) .k{color:var(--dusk)}
+
+.q{font-size:calc(36px*var(--s));font-weight:700;line-height:1.45;margin-bottom:calc(18px*var(--s));background:var(--paper);border-left:calc(10px*var(--s)) solid var(--amber);padding:calc(16px*var(--s)) calc(22px*var(--s));border-radius:calc(10px*var(--s))}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:calc(16px*var(--s))}
+.opt{display:flex;gap:calc(14px*var(--s));align-items:center;text-align:left;background:var(--paper);border:3px solid var(--line);border-radius:calc(18px*var(--s));padding:calc(16px*var(--s)) calc(20px*var(--s));font-size:calc(30px*var(--s));line-height:1.4;cursor:pointer;font-family:inherit;color:inherit;transition:transform .15s}
+.opt:active{transform:scale(.97)}
+.opt b{flex:none;min-width:calc(50px*var(--s));height:calc(50px*var(--s));padding:0 calc(8px*var(--s));border-radius:999px;background:var(--soft);display:grid;place-items:center;font-size:calc(25px*var(--s))}
+.opt.right{border-color:var(--teal);background:#E3F3F4}.opt.right b{background:var(--teal);color:#fff}
+.opt.wrong{border-color:var(--orange);background:#FBE9E3;opacity:.85;animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.opt:disabled{cursor:default}
+.vote .opt{flex-direction:column;justify-content:center;text-align:center}
+.vote .opt b{background:var(--amber);color:var(--ink);font-size:calc(30px*var(--s));min-width:calc(64px*var(--s));height:calc(64px*var(--s))}
+.vote .opt b.bump{animation:bump .35s}
+@keyframes bump{50%{transform:scale(1.3)}}
+
+/* 迷思是非題 */
+.tfq{font-size:calc(42px*var(--s));font-weight:700;line-height:1.5;background:var(--paper);border-radius:calc(22px*var(--s));padding:calc(26px*var(--s)) calc(32px*var(--s));border:3px dashed var(--amber);text-align:center;margin-bottom:calc(22px*var(--s))}
+.tfb{display:grid;grid-template-columns:1fr 1fr;gap:calc(22px*var(--s))}
+.tfb button{font-family:inherit;font-size:calc(40px*var(--s));font-weight:900;border-radius:calc(22px*var(--s));padding:calc(18px*var(--s));cursor:pointer;border:4px solid var(--line);background:var(--paper);color:var(--ink);transition:transform .15s}
+.tfb button:active{transform:scale(.96)}
+.tfb button .ic{display:block;font-size:calc(64px*var(--s));line-height:1}
+.tfb button.yes .ic{color:var(--teal)}.tfb button.no .ic{color:var(--orange)}
+.tfb button.right{border-color:var(--teal);background:#E3F3F4}
+.tfb button.wrong{border-color:var(--orange);background:#FBE9E3;animation:shake .4s}
+
+/* 時間軸 */
+.tl{display:grid;grid-template-columns:1.3fr repeat(4,1fr);gap:calc(12px*var(--s));position:relative}
+.step{background:var(--paper);border:2px solid var(--line);border-radius:calc(18px*var(--s));padding:calc(16px*var(--s));position:relative;display:flex;flex-direction:column;gap:calc(8px*var(--s))}
+.step .n{width:calc(54px*var(--s));height:calc(54px*var(--s));border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:calc(26px*var(--s));color:#fff}
+.step .k{font-size:calc(30px*var(--s));font-weight:700;line-height:1.3}
+.step .v{font-size:calc(25px*var(--s));line-height:1.5}
+.step:not(:last-child)::after{content:"";position:absolute;right:calc(-12px*var(--s));top:calc(42px*var(--s));border:calc(9px*var(--s)) solid transparent;border-left-color:var(--teal);transform:translateX(calc(8px*var(--s)))}
+
+/* 證據等級 */
+.lvs{display:grid;gap:calc(10px*var(--s))}
+.lvr{display:grid;grid-template-columns:calc(96px*var(--s)) 1fr calc(220px*var(--s));align-items:center;gap:calc(14px*var(--s));background:var(--paper);border-radius:calc(14px*var(--s));padding:calc(10px*var(--s)) calc(16px*var(--s));border:2px solid var(--line)}
+.lvr .b{font-size:calc(30px*var(--s));font-weight:900;color:#fff;border-radius:calc(12px*var(--s));text-align:center;padding:calc(4px*var(--s)) 0}
+.lvr .k{font-size:calc(26px*var(--s));line-height:1.4}
+.lvr .v{font-size:calc(25px*var(--s));font-weight:700;text-align:right}
+.foot{margin-top:calc(14px*var(--s));background:#FFF8E8;border-left:calc(8px*var(--s)) solid var(--amber);border-radius:calc(10px*var(--s));padding:calc(10px*var(--s)) calc(18px*var(--s));font-size:calc(24px*var(--s));line-height:1.55}
+
+/* 研究卡 */
+.sth{display:grid;grid-template-columns:1fr auto;gap:calc(18px*var(--s));align-items:center;background:var(--paper);border:2px solid var(--line);border-radius:calc(18px*var(--s));padding:calc(14px*var(--s)) calc(20px*var(--s));margin-bottom:calc(14px*var(--s))}
+.sth .tt{font-size:calc(26px*var(--s));font-weight:700;line-height:1.4}
+.sth .qq{font-size:calc(22px*var(--s));color:#3F5A60;line-height:1.5;margin-top:calc(6px*var(--s))}
+.badge{text-align:center;border-radius:calc(16px*var(--s));padding:calc(8px*var(--s)) calc(18px*var(--s));color:#fff;min-width:calc(170px*var(--s))}
+.badge .l1{font-size:calc(18px*var(--s));opacity:.9}
+.badge .l2{font-size:calc(46px*var(--s));font-weight:900;line-height:1.1}
+.badge .l3{font-size:calc(19px*var(--s));line-height:1.35;max-width:calc(200px*var(--s))}
+.st3{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(14px*var(--s))}
+.st3 .card .k{font-size:calc(26px*var(--s))}
+.st3 .card .v{font-size:calc(24px*var(--s))}
+.mean{margin-top:calc(14px*var(--s));background:var(--ink);color:#fff;border-radius:calc(14px*var(--s));padding:calc(12px*var(--s)) calc(20px*var(--s));font-size:calc(26px*var(--s));line-height:1.5}
+.mean b{color:var(--amber)}
+
+/* 五個希望 */
+.wl{display:grid;gap:calc(10px*var(--s))}
+.wr{display:grid;grid-template-columns:calc(300px*var(--s)) 1fr;gap:calc(14px*var(--s));align-items:center;background:var(--paper);border:2px solid var(--line);border-radius:calc(16px*var(--s));padding:calc(10px*var(--s)) calc(16px*var(--s))}
+.wr .k{font-size:calc(27px*var(--s));font-weight:700;color:var(--theme);display:flex;align-items:center;gap:calc(10px*var(--s))}
+.wr .k i{font-style:normal;flex:none;width:calc(40px*var(--s));height:calc(40px*var(--s));border-radius:50%;background:var(--amber);color:var(--ink);display:grid;place-items:center;font-size:calc(22px*var(--s))}
+.chips{display:flex;flex-wrap:wrap;gap:calc(10px*var(--s))}
+.chips button{font-family:inherit;font-size:calc(25px*var(--s));border:2px solid var(--line);background:var(--soft);color:var(--ink);border-radius:999px;padding:calc(6px*var(--s)) calc(20px*var(--s));cursor:pointer;transition:transform .15s}
+.chips button.on{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700;transform:scale(1.04)}
+
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(14px*var(--s))}
+.cards.nine{grid-template-columns:repeat(3,1fr)}
+.sc{background:var(--paper);border:3px solid var(--line);border-radius:calc(18px*var(--s));padding:calc(18px*var(--s)) calc(14px*var(--s));font-size:calc(28px*var(--s));font-weight:700;line-height:1.4;text-align:center;cursor:pointer;font-family:inherit;color:inherit;min-height:calc(110px*var(--s));display:grid;place-items:center}
+.sc.found{border-color:var(--orange);background:#FBE9E3;animation:shake .4s}
+.sc.good{border-color:var(--teal);background:#E3F3F4}
+.explain{margin-top:calc(14px*var(--s));background:var(--ink);color:#fff;border-radius:calc(14px*var(--s));padding:calc(12px*var(--s)) calc(20px*var(--s));font-size:calc(25px*var(--s));line-height:1.5;min-height:calc(72px*var(--s))}
+.explain b{color:var(--amber)}
+
+.bank{display:flex;flex-wrap:wrap;gap:calc(12px*var(--s));margin-bottom:calc(16px*var(--s))}
+.bank button{background:var(--amber);border:0;border-radius:999px;padding:calc(8px*var(--s)) calc(22px*var(--s));font-size:calc(28px*var(--s));font-weight:700;font-family:inherit;color:var(--ink);cursor:pointer}
+.lines{display:grid;gap:calc(14px*var(--s))}
+.line{font-size:calc(32px*var(--s));background:var(--paper);border-radius:calc(14px*var(--s));padding:calc(12px*var(--s)) calc(20px*var(--s));line-height:1.7}
+.blank{display:inline-block;min-width:5em;border-bottom:3px solid var(--teal);text-align:center;margin:0 .2em;color:var(--teal);font-weight:700;cursor:pointer;padding:0 .3em}
+.blank.active{background:#E3F3F4}
+.blank.ok{color:var(--teal)}.blank.bad{color:var(--orange);border-color:var(--orange)}
+
+.olist{display:grid;gap:calc(12px*var(--s))}
+.ob{display:flex;align-items:center;gap:calc(16px*var(--s));background:var(--paper);border:3px solid var(--line);border-radius:calc(16px*var(--s));padding:calc(12px*var(--s)) calc(20px*var(--s));font-size:calc(30px*var(--s));text-align:left;font-family:inherit;color:inherit;cursor:pointer;line-height:1.4}
+.ob b{flex:none;width:calc(54px*var(--s));height:calc(54px*var(--s));border-radius:50%;background:var(--soft);display:grid;place-items:center;font-size:calc(26px*var(--s))}
+.ob.picked b{background:var(--theme);color:#fff}
+.ob.ok{border-color:var(--teal)}.ob.bad{border-color:var(--orange)}
+
+.pl{display:grid;grid-template-columns:1fr 1fr;gap:calc(14px*var(--s))}
+.pl button{background:var(--paper);border:3px solid var(--line);border-radius:calc(16px*var(--s));padding:calc(14px*var(--s)) calc(20px*var(--s));font-size:calc(29px*var(--s));text-align:left;font-family:inherit;color:inherit;cursor:pointer;line-height:1.4}
+.pl button.on{border-color:var(--orange);background:#FBE9E3;font-weight:700}
+.pl button::before{content:"☐ "}.pl button.on::before{content:"☑ "}
+
+.btnrow{display:flex;gap:calc(12px*var(--s));margin-top:calc(16px*var(--s))}
+.btn{background:var(--orange);color:#fff;border:0;border-radius:999px;padding:calc(10px*var(--s)) calc(28px*var(--s));font-size:calc(26px*var(--s));font-weight:700;font-family:inherit;cursor:pointer}
+.btn.ghost{background:var(--paper);color:var(--ink);border:2px solid var(--line)}
+
+.scorebox{text-align:center}
+.scorebox .big{font-size:calc(120px*var(--hs));font-weight:900;color:var(--orange);line-height:1.1}
+.scorebox .txt{font-size:calc(36px*var(--s));margin-top:calc(10px*var(--s))}
+
+button:focus-visible{outline:4px solid var(--amber);outline-offset:2px}
+#bar{position:absolute;left:0;right:0;bottom:0;height:calc(64px + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);background:var(--ink);color:#fff;display:flex;align-items:center;gap:10px;padding-left:16px;padding-right:16px;font-size:18px}
+#bar button{background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:10px;padding:8px 14px;font-size:18px;font-family:inherit;cursor:pointer;white-space:nowrap}
+#bar button:hover{background:rgba(255,255,255,.25)}
+#bar .sp{flex:1}
+#pg{white-space:nowrap}
+#stars{color:var(--amber);font-weight:700;white-space:nowrap}
+#stars.bump{animation:bump .5s}
+#ans{position:absolute;inset:0;display:none;place-items:center;background:rgba(18,52,59,.55);z-index:30;padding:16px}
+#ans.on{display:grid}
+#ans .box{background:#fff;border-radius:24px;padding:32px 40px;max-width:min(900px,92vw);max-height:88vh;overflow:auto;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:boxIn .45s cubic-bezier(.2,.9,.3,1.25)}
+@keyframes boxIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+#ans .ttl{font-size:clamp(30px,5vw,50px);font-weight:900;margin-bottom:12px}
+#ans .ttl.ok{color:var(--teal)}#ans .ttl.no{color:var(--orange)}
+#ans .fb{font-size:clamp(20px,2.6vw,30px);line-height:1.6;color:var(--ink);text-align:left}
+#ans .btn{margin-top:22px;font-size:24px;padding:10px 34px}
+.flystar{position:absolute;z-index:40;font-size:64px;color:var(--amber);pointer-events:none;animation:fly 1.1s ease-out forwards;text-shadow:0 4px 12px rgba(0,0,0,.2)}
+@keyframes fly{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.4)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(.5)}}
+#note{position:absolute;left:16px;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));background:#FFF8E8;border:3px solid var(--amber);border-radius:16px;padding:16px 22px;font-size:22px;line-height:1.6;display:none;z-index:25;max-height:45%;overflow:auto}
+#note.on{display:block}
+#note b{color:var(--orange)}
+#menu{position:absolute;inset:0;background:rgba(242,246,245,.97);display:none;z-index:28;padding:30px;padding-top:calc(30px + env(safe-area-inset-top,0px));overflow:auto}
+#menu.on{display:block}
+#menu .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+#menu button{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;font-size:19px;text-align:left;font-family:inherit;color:inherit;cursor:pointer}
+#menu button.cur{border-color:var(--orange)}
+#menu h2{margin:0 0 16px;font-size:28px}
+@media (max-width:760px){
+ .slide{padding:calc(18px*var(--s)) calc(18px*var(--s))}
+ .opts,.pl,.tl,.st3{grid-template-columns:1fr!important}
+ .grid{grid-template-columns:1fr!important}
+ .cards,.cards.nine{grid-template-columns:1fr 1fr}
+ .step{flex-direction:row;align-items:flex-start;flex-wrap:wrap}.step .k{flex:1}.step .v{flex-basis:100%}
+ .step:not(:last-child)::after{display:none}
+ .wr{grid-template-columns:1fr}
+ .lvr{grid-template-columns:calc(80px*var(--s)) 1fr}.lvr .v{grid-column:2;text-align:left}
+ .sth{grid-template-columns:1fr}
+ .road .st span{display:none}
+ #bar{font-size:15px;gap:6px;padding-left:8px;padding-right:8px}#bar button{padding:7px 9px;font-size:15px}
+ #bar .hide-s{display:none}
+}
+@media (max-height:520px) and (orientation:landscape){#bar .hide-s{display:none}.road .st span{display:none}.road{margin-bottom:4px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* 案例 */
+.case .who{font-size:calc(27px*var(--s));line-height:1.5;background:#FFF8E8;border-left:calc(8px*var(--s)) solid var(--amber);border-radius:calc(10px*var(--s));padding:calc(10px*var(--s)) calc(18px*var(--s));margin-bottom:calc(14px*var(--s))}
+.case2{display:grid;grid-template-columns:1.15fr 1fr;gap:calc(18px*var(--s));align-items:start}
+.facts{display:grid;gap:calc(10px*var(--s))}
+.fact{display:flex;gap:calc(12px*var(--s));align-items:flex-start;background:var(--paper);border:2px solid var(--line);border-radius:calc(14px*var(--s));padding:calc(10px*var(--s)) calc(16px*var(--s));font-size:calc(25px*var(--s));line-height:1.5}
+.fact b{flex:none;width:calc(40px*var(--s));height:calc(40px*var(--s));border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-size:calc(22px*var(--s));margin-top:calc(2px*var(--s))}
+.lessons{display:grid;gap:calc(10px*var(--s))}
+.lessons .lt{font-size:calc(24px*var(--s));font-weight:700;color:#6B8086}
+.lessons .card{padding:calc(12px*var(--s)) calc(18px*var(--s))}
+.lessons .card .k{font-size:calc(27px*var(--s))}.lessons .card .v{font-size:calc(24px*var(--s))}
+/* 數字 */
+.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:calc(16px*var(--s))}
+.stat{background:var(--paper);border:2px solid var(--line);border-radius:calc(20px*var(--s));padding:calc(20px*var(--s)) calc(24px*var(--s));text-align:center}
+.stat .n{font-size:calc(64px*var(--s));font-weight:900;color:var(--orange);line-height:1.1}
+.stat .n small{font-size:calc(28px*var(--s));margin-left:.15em;color:var(--ink)}
+.stat:nth-child(2) .n{color:var(--teal)}.stat:nth-child(3) .n{color:#A8650A}.stat:nth-child(4) .n{color:var(--dusk)}
+.stat .d{font-size:calc(25px*var(--s));line-height:1.45;margin-top:calc(8px*var(--s))}
+@media (max-width:760px){.case2{grid-template-columns:1fr}.statgrid{grid-template-columns:1fr 1fr}}
+/* 影片頁 */
+.vid{display:grid;grid-template-columns:1.55fr 1fr;gap:calc(20px*var(--s));flex:1;min-height:0;align-items:stretch}
+.vid .frame{position:relative;background:#000;border-radius:calc(18px*var(--s));overflow:hidden;min-height:calc(240px*var(--s));box-shadow:0 14px 40px rgba(18,52,59,.25)}
+.vid .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid .grid{align-content:center}
+@media (max-width:760px){.vid{grid-template-columns:1fr}.vid .frame{aspect-ratio:16/9;min-height:0}}
+/* 圖片版位 */
+.withpic{display:grid;grid-template-columns:36% 1fr;gap:calc(22px*var(--s));align-items:stretch;flex:1;min-height:0}
+.withpic .pic{border-radius:calc(20px*var(--s));overflow:hidden;min-height:0;background:var(--soft)}
+.withpic .pic img{width:100%;height:100%;object-fit:cover;display:block}
+.withpic .body>:first-child{margin-top:0}.withpic .body>:last-child{margin-bottom:0}
+.withpic .body{justify-content:center}
+.section .sec2{display:flex;align-items:center;gap:calc(40px*var(--s));justify-content:center;text-align:left;width:100%}
+.section .sec2 .pic{width:38%;max-height:72vh;border-radius:calc(24px*var(--s));overflow:hidden;flex:none;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.section .sec2 .pic img{width:100%;height:100%;object-fit:cover;display:block}
+.section .sec2 .txt{flex:1}
+@media (max-width:760px){.withpic{grid-template-columns:1fr}.withpic .pic{max-height:26%}.section .sec2{flex-direction:column;text-align:center}.section .sec2 .pic{width:60%}}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div id="note"></div>
+<div id="menu"><h2>目錄（點選跳頁）</h2><div class="g" id="menuG"></div></div>
+<div id="ans" role="dialog" aria-live="polite"><div class="box"><div class="ttl" id="ansT"></div><div class="fb" id="ansF"></div><button class="btn" id="ansB">知道了</button></div></div>
+<div id="bar">
+  <button id="prev" aria-label="上一頁">◀<span class="hide-s"> 上一頁</span></button><button id="next" aria-label="下一頁"><span class="hide-s">下一頁 </span>▶</button>
+  <span id="pg"></span><span class="sp"></span>
+  <span id="stars">★ 0 / 0</span>
+  <button id="sndBtn" title="音效開關">🔊</button>
+  <button id="noteBtn" title="講師提示 N">提示</button>
+  <button id="menuBtn" title="目錄">目錄</button>
+  <button id="fsBtn" class="hide-s" title="全螢幕 F">全螢幕</button>
+</div>
+<script>
+const PICS={"st1-road":"img/st1-road.jpg","st2-porridge":"img/st2-porridge.jpg","st3-card":"img/st3-card.jpg","st4-sofa":"img/st4-sofa.jpg","st5-hand":"img/st5-hand.jpg","bedside":"img/bedside.jpg","handfeed":"img/handfeed.jpg","acp-table":"img/acp-table.jpg","dinner":"img/dinner.jpg","five-senses":"img/five-senses.jpg","sunset-walk":"img/sunset-walk.jpg"};
+const DECK={stations:["認識這條路","末期照顧難題","預立醫療","我的五個希望","不用說話的陪伴"],slides:[
+{t:"cover",sub:"宜蘭縣五結鄉衛生所｜社區長者講座",h:"好好走完最後一哩路",lead:"失智症末期的照顧選擇與臨終陪伴準備",who:"鍾孟修　職能治療師",note:"開場先謝謝大家一早來。說明今天的題目聽起來有點沉重，但我們不是來談害怕的，是來談「怎麼讓最後一段路走得舒服、走得安心」。提醒長輩：今天有很多題目要大家一起回答，答對有星星。"},
+{t:"vote",tag:"暖身",h:"先舉手就好",q:"你跟家人聊過「最後那段日子想怎麼過」嗎？",opts:["聊過了","想過，還沒說","還沒想過"],note2:"這一題沒有對錯。講師點選按鈕記下舉手人數。",note:"請長輩舉手，講師點按鈕記票數。多數人會落在「想過，還沒說」或「還沒想過」。可以說：這很正常，在台灣這件事常被當成忌諱，今天就是來幫大家找到開口的方法。"},
+{t:"points",tag:"今天的路線",h:"今天我們走五站",cols:3,items:[{k:"第一站",v:"認識失智症這條路：從記性變差到末期"},{k:"第二站",v:"末期常見的照顧難題：吃、感染、說不出口"},{k:"第三站",v:"預立醫療：法律怎麼保障我的決定"},{k:"第四站",v:"我的五個希望：把心意說出口"},{k:"第五站",v:"不用說話的陪伴：五感與舒適照顧"},{k:"最後",v:"大家一起討論，有問題都可以問"}],note:"快速帶過路線。強調：每一站都有互動題，答對會累積星星，最後看全場拿到幾顆。"},
+{t:"section",st:1,pic:"st1-road",h:"第一站｜失智症這條路",lead:"先認識整條路，才知道每一段可以怎麼走。",note:"轉場。可以問：在座有沒有人家裡、鄰居照顧過失智的長輩？不用說細節，舉手就好。讓大家知道這個話題離我們不遠。"},
+{t:"tf",st:1,tag:"迷思還是事實",h:"迷思一",q:"老了本來就會忘東忘西，記性變差不用看醫生。",ans:false,fb:"正常老化是「一時想不起來，提醒就想起來」；失智是「整件事不見了」，而且越來越影響生活。早點看醫生，可以找出可治療的原因，也能趁還清楚的時候，為自己做決定。",note:"先讓長輩舉手：覺得對的舉手、覺得不對的舉手，再點按鈕公布。答完補一句：今天後面會講到，「早點看醫生」還有一個很大的好處，跟預立醫療有關，先賣個關子。"},
+{t:"timeline",st:1,tag:"病程",h:"從輕度認知障礙到末期",lead:"每個人速度不同，可能是幾年，也可能十多年。",steps:[{k:"輕度認知障礙",v:"記性變差、反應變慢，生活大多還能自理。"},{k:"輕度",v:"理財、搭車、煮一桌菜，開始容易出錯。"},{k:"中度",v:"穿衣、洗澡要人幫忙，可能迷路、日夜顛倒。"},{k:"重度",v:"走路不穩、大小便失禁，話越來越少。"},{k:"末期",v:"多半臥床，吞嚥困難，幾乎不說話。"}],src:"參考 Reisberg 功能評估分期（FAST）整理",note:"一格一格往右講。重點放在「能力是一層一層退的」：越複雜的事越早受影響。講到末期時語氣放慢，提醒大家：今天主要談的是最後兩格，但準備要從第一格就開始。"},
+{t:"case",st:1,tag:"藝人故事",h:"郎祖筠：就怕爸爸忘了我",who:"演員、導演郎祖筠，陪伴失智的父親六年，父親在 2010 年離開。",facts:["她說過一句很多家屬都有共鳴的話：「我什麼都不怕，就怕爸爸忘了我！」","外籍看護回國、新看護還沒來的那兩個月，媽媽一個人 24 小時照顧，累到全家的氣氛都繃緊了。","她曾帶爸爸去參觀安養院，爸爸的眼神像在問：「妳是不是不要我了？」讓她心痛到說不出話。","爸爸住院後越來越虛弱，跟她說「我想回去」。她忍住眼淚走出病房才放聲大哭；後來她成為志工，到處分享這段路。"],lessons:[{k:"眼神也是一種語言",v:"說不出話的時候，眼神、表情都在表達，照顧的人要學著讀。"},{k:"照顧不能靠一個人",v:"媽媽撐兩個月就撐不住了，喘息服務、看護、居服都是幫手。"},{k:"「我想回去」要被聽見",v:"最後一段路想在哪裡、怎麼過，越早說出來，家人越不會兩難。"}],src:"綜合 TVBS 健康、早安健康、鏡週刊報導",note:"郎祖筠是長輩常在電視上看到的人。先問：家裡有沒有人照顧過失智長輩？「就怕爸爸忘了我」這句話，很多家屬都說過。最後一個重點「我想回去」，接到後面的病程與預立醫療。"},
+{t:"video",st:1,tag:"看影片",h:"當家人忘了我是誰",lead:"先看一段照顧者的真心話，再來談這條路。",yt:"S1y4-Xspa6g",start:168,vtitle:"《無憾—重度與末期失智症之照顧（國語）》",qs:[{k:"看之前想一想",v:"如果有一天，他叫不出你的名字，你會怎麼想？"},{k:"看完聊一聊",v:"影片裡的家人難過的是什麼？他忘了名字，還記得什麼？"},{k:"帶著走",v:"忘了名字，不代表忘了你帶來的安心感。"}],src:"社團法人台灣失智症協會《無憾—重度與末期失智症之照顧（國語）》，YouTube",note:"影片從 2 分 48 秒開始播，看到 3 分 27 秒左右（下一段的起點）就可以暫停。看完先不急著講，問一位長輩：你聽到什麼？再帶「他忘了名字，但你握他的手，他還是安心的」。播放需要網路，現場沒有網路可用手機開熱點，或跳過此頁直接講郎祖筠的故事。"},
+{t:"order",st:1,tag:"排排看",h:"能力退化，通常先失去哪一個？",lead:"點選句子，從「最早失去」排到「最晚失去」。",items:["自己處理帳單、存款","自己挑選合適的衣服","自己洗澡","自己走路","自己吞嚥"],fb:"越複雜的事越早受影響，走路、吞嚥這些最基本的能力最晚才失去。所以到了末期，最常遇到的難題就是「吃」和「嗆」。",note:"請長輩喊出第一個是哪一句，講師依大家的意見點選。排完後連結下一站：最後失去的是吞嚥，所以末期最大的課題就是吃。"},
+{t:"tf",st:1,tag:"迷思還是事實",h:"迷思二",q:"失智症只是記性不好，不會走到生命的盡頭。",ans:false,fb:"失智症是會一路進展的腦部疾病。到了末期，身體越來越虛弱，常因為肺炎、感染等併發症離開。把末期當成生命末期來準備，才能提早安排舒適的照顧。",note:"這題很多人會答錯，不要急著糾正。公布後說：這不是要嚇大家，而是知道了，才有機會好好準備。下一頁先教大家怎麼看研究，再看國外研究怎麼說。"},
+{t:"levels",st:1,tag:"看懂研究",h:"看研究前，先懂「證據等級」",lead:"數字越小，參考價值越高；同一個等級，還要看研究做得好不好。",items:[{lv:"1a",k:"統合很多個「抽籤分組」的試驗",v:"最高"},{lv:"1b",k:"一個設計嚴謹的「抽籤分組」試驗",v:"高"},{lv:"2a",k:"統合很多個長期追蹤的研究",v:"中高"},{lv:"2b",k:"一個長期追蹤一群人的研究",v:"中"},{lv:"3–4",k:"回頭比較病例、或只描述幾個個案",v:"偏低"},{lv:"5",k:"專家的意見與共識",v:"低，僅供參考"}],foot:"「抽籤分組」就是隨機對照試驗：把人用抽籤分兩組，一組有做、一組沒做，比較兩組的差別，最能看出真正的效果。",src:"依英國牛津實證醫學中心（CEBM）證據等級整理",note:"用買東西比喻：1a 像是很多家消費者評比的總整理，5 像是一位店員的推薦，都有參考價值，但分量不同。之後每看到一篇研究，都會標出等級。"},
+{t:"study",st:1,tag:"研究怎麼說",h:"重度失智長輩的最後一年半",title:"美國護理之家追蹤研究（Mitchell 等，2009，新英格蘭醫學期刊）",lv:"2b",val:"中上",quality:"前瞻追蹤 22 家機構、資料完整；但只在美國波士頓地區，照顧文化與台灣不同。",who:"323 位住在護理之家的重度失智長輩。",how:"追蹤 18 個月，記錄出現的健康問題與接受的醫療處置。",res:"約 86% 出現進食困難、41% 得過肺炎、53% 發燒過。家屬越清楚病程，長輩臨終前受辛苦處置越少。",mean:"吃不下、反覆感染是末期常見的樣子，不是照顧失敗；家人越早了解，越能替長輩少受折騰。",src:"Mitchell SL, et al. N Engl J Med. 2009;361:1529-38",note:"先講研究怎麼做的（對象、追蹤多久），再講結果。最後一句「不是照顧失敗」要說清楚，很多家屬會自責。"},
+{t:"tf",st:1,tag:"迷思還是事實",h:"迷思三",q:"失智到了末期，什麼都不懂了，跟他說話也沒用。",ans:false,fb:"理解語言的能力退化了，但感覺還在：說話的語氣、手的溫度、熟悉的歌，都可能讓他安心。陪伴要從「說道理」換成「讓他感覺到」。",note:"公布後預告：第五站會專門教大家怎麼做「不用說話的陪伴」。"},
+{t:"video",st:1,tag:"看影片",h:"末期了，他還聽得懂嗎？",lead:"迷思三的答案，讓照顧現場的人自己告訴你。",yt:"S1y4-Xspa6g",start:207,vtitle:"《無憾—重度與末期失智症之照顧（國語）》",qs:[{k:"看之前想一想",v:"你覺得末期的長輩，聽得懂家人在說什麼嗎？"},{k:"看完聊一聊",v:"影片裡怎麼看出「他有聽懂」？是表情、眼神，還是動作？"},{k:"帶著走",v:"他聽得懂，所以床邊要說讓他安心的話；這就是第五站要練的。"}],src:"社團法人台灣失智症協會《無憾—重度與末期失智症之照顧（國語）》，YouTube",note:"從 3 分 27 秒播到大約 5 分 02 秒。看完回扣迷思三：不是什麼都不懂，是「懂了，但說不出來」。"},
+{t:"case",st:1,tag:"名人案例",h:"布魯斯威利一家的選擇",who:"好萊塢影星布魯斯威利（Bruce Willis），2022 年起因失語症息影，2023 年家人公布他罹患額顳葉型失智症。",facts:["2025 年，妻子艾瑪做了她說「一生最難的決定」：把他安置在有全天候照顧的住處，自己每天過去陪他吃早餐、晚餐。","全家一起商量，決定將來捐出他的大腦做失智症研究。","每逢節日，全家還是會放他最愛的電影，因為那會讓他露出笑容。","艾瑪坦白說過自己並不好過；2025 年她把這段路寫成書，希望幫助其他照顧者，也公開說：安置的決定，要以「他和家人都安全」為優先。"],lessons:[{k:"家人一起商量",v:"重大決定不是一個人扛，大家談過，之後才不會互相怪。"},{k:"照顧者也要被照顧",v:"說出「我不好」不是軟弱，是找幫手的開始。"},{k:"熟悉的事物最安心",v:"他已經很難說話，但熟悉的電影還能讓他笑。"}],src:"綜合 2025 年媒體報導（ABC、CBS News、聯合報）",note:"用這個案例收尾第一站。重點不在明星，而是：連好萊塢巨星的家庭，也要面對同樣的三件事。問長輩：如果是你家，誰會是那個「每天去陪吃早餐」的人？"},
+{t:"section",st:2,pic:"st2-porridge",h:"第二站｜末期常見的照顧難題",lead:"吃不下、反覆感染、說不出口、誰來決定。",note:"轉場。說明這一站談的是照顧現場最常卡住的四件事。"},
+{t:"points",st:2,pic:"bedside",tag:"四個難題",h:"末期最常遇到的四件事",cols:2,four:true,items:[{k:"吃不下、容易嗆",v:"吞嚥變差，吃很久、飯含在嘴裡不吞、喝水就咳。"},{k:"反覆感染、進出醫院",v:"肺炎、泌尿道感染、壓瘡，常常一次比一次難恢復。"},{k:"說不出不舒服",v:"痛、渴、熱都講不出來，只會皺眉、呻吟或躁動。"},{k:"誰來做決定",v:"長輩已經無法表達，家人之間常常意見不同。"}],note:"一張一張講，每張問一句：有沒有人遇過？請願意的長輩簡短分享。第四張「誰來做決定」先點到為止，第三站會完整談。"},
+{t:"case",st:2,tag:"藝人故事",h:"唐從聖：照顧，是不斷卡關、不斷轉彎",who:"藝人唐從聖（從從），父母相繼失智，他一邊工作一邊照顧了十多年，也擔任失智友善推廣大使。",facts:["爸爸是職業軍人、很愛面子，死都不肯包尿布，常常在外面失禁。家人改用像褲子一樣的穿脫式「復健褲」，又花了快一年，爸爸才願意接受。","一開始大小事都幫爸爸做好，結果爸爸動腦、動手的機會變少，反而從輕度退到中度。","媽媽則讓她繼續拔菜、剝豆子、餵鳥，還買了一隻鸚鵡陪她說話，病況就一直維持在輕度。","他說照顧失智家人，就是「不斷卡關、不斷轉彎」的日常；2026 年他仍在公開提醒：照顧家人的同時，別忘了照顧自己。"],lessons:[{k:"換個說法，就過得去",v:"「尿布」變「復健褲」，一樣的東西，長輩的感受完全不同。"},{k:"能做的讓他自己做",v:"幫太多反而退得快；這就是我們職能治療常說的「生活復能」。"},{k:"照顧者先顧好自己",v:"他說：照顧現在的老人，也是在照顧未來的自己。"}],src:"綜合匯流新聞網（2018）、三立新聞、工商時報（2026）報導",note:"這頁可以輕鬆一點講，「復健褲」的故事通常會讓長輩會心一笑。重點放在「換個說法」和「能做的讓他做」，和後面的舒適手餵、不勉強吃完互相呼應。"},
+{t:"video",st:2,tag:"看影片",h:"末期的如廁：尿布、尊嚴與皮膚",lead:"大小便失禁是重度到末期一定會遇到的事，先聽聽照顧現場怎麼做。",yt:"S1y4-Xspa6g",start:403,vtitle:"《無憾—重度與末期失智症之照顧（國語）》",qs:[{k:"看之前想一想",v:"如果是你，換尿布的時候最在意的是什麼？是乾淨，還是面子？"},{k:"看完聊一聊",v:"影片裡的照顧者怎麼讓長輩比較不抗拒？怎麼顧到皮膚不破？"},{k:"帶著走",v:"尿濕、便祕、紅腫，長輩說不出口，常用躁動來表達；把這些排除了，他就安靜了。"}],src:"社團法人台灣失智症協會《無憾—重度與末期失智症之照顧（國語）》，YouTube",note:"從 6 分 43 秒開始播，看完如廁段落即可。接前一頁唐從聖「復健褲」的故事：換個說法、保留尊嚴。提醒三件事：定時查看與更換、清潔後保持乾爽、紅腫破皮要早點處理。看完接餵食那段影片。"},
+{t:"video",st:2,tag:"看影片",h:"穿脫衣物的困難與挑戰",lead:"手舉不起來、關節變硬、一碰就抗拒，衣服要怎麼穿？",yt:"S1y4-Xspa6g",start:492,vtitle:"《無憾—重度與末期失智症之照顧（國語）》",qs:[{k:"看之前想一想",v:"幫一個不太能配合的人穿衣服，你覺得最難的是哪一步？"},{k:"看完聊一聊",v:"影片裡照顧者用了什麼方法？先穿哪一邊？衣服是不是有特別挑過？"},{k:"帶著走",v:"先穿比較僵硬、比較不方便的那一邊，脫的時候相反；寬鬆、前開、有魔鬼氈的衣服最省力。"}],src:"社團法人台灣失智症協會《無憾—重度與末期失智症之照顧（國語）》，YouTube",note:"從 8 分 12 秒開始播，看完穿脫衣物段落即可。這是職能治療最常教家屬的事，可以用自己的外套示範「先穿患側、後脫患側」一次就好，不用大家演練。動作慢、邊做邊說「現在要抬手囉」，長輩比較不會嚇到抗拒。看完接餵食影片。"},
+{t:"video",st:2,tag:"看影片",h:"餵食的困擾與挑戰",lead:"末期最常卡住的事，先聽聽照顧現場怎麼說。",yt:"S1y4-Xspa6g",start:302,vtitle:"《無憾—重度與末期失智症之照顧（國語）》",qs:[{k:"看之前想一想",v:"家裡有沒有人餵過吃得很慢、常常嗆到的長輩？"},{k:"看完聊一聊",v:"影片裡最困擾照顧者的是什麼？是嗆、是吃太少，還是「不吃怎麼辦」的焦慮？"},{k:"帶著走",v:"吃不下常常是病程的一部分，不是沒照顧好；下一題一起想怎麼餵比較安全。"}],src:"社團法人台灣失智症協會《無憾—重度與末期失智症之照顧（國語）》，YouTube",note:"從 5 分 02 秒開始播，看到談完餵食的段落即可，約兩三分鐘。看完接下一題「阿嬤吃飯常嗆到」，再講舒適手餵與管灌研究。"},
+{t:"choice",st:2,tag:"想一想",h:"阿嬤吃飯常嗆到",q:"末期的阿嬤吃飯常常嗆到，哪一種做法比較合適？",opts:["讓她躺著餵，比較不費力","趁熱快一點，一口接一口","坐直、小口、吞完再餵","每口大一點，少吞幾次"],ans:2,fb:"坐直，食物比較能順著食道下去；小口、等吞乾淨再餵下一口，嗆的機會比較低。嗆咳越來越多時，可以請語言治療師或職能治療師評估姿勢和食物軟硬。",note:"請長輩用手比 1、2、3、4 表示選哪個，再點選公布。補充：吞嚥評估可以透過長照或醫院申請。"},
+{t:"tf",st:2,tag:"迷思還是事實",h:"迷思四",q:"末期失智吃不下，插鼻胃管就能活更久，也不會得肺炎。",ans:false,fb:"目前研究沒有發現管灌能讓重度失智長輩活得更久，也沒有證據顯示能減少吸入性肺炎，因為口水和胃裡的東西一樣可能嗆進肺裡。要不要放管子，是可以和醫師好好討論的選擇，沒有標準答案。",note:"這題要特別小心語氣：在座可能有人的家人正在管灌。強調「沒有對錯，是選擇」，放了管子的家屬不需要自責。下一頁看研究。"},
+{t:"study",st:2,tag:"研究怎麼說",h:"重度失智的管灌餵食",title:"考科藍（Cochrane）系統性回顧（Davies 等，2021）",lv:"2a",val:"中，但結論的確定性很低",quality:"找不到抽籤分組的試驗（倫理上很難做），只能統合觀察性研究，所以結論要保守看待。",who:"重度失智、吃不下的長輩。",how:"整理 14 篇比較「有管灌」與「沒有管灌」長輩的觀察性研究，共約 5 萬人。",res:"沒有發現管灌能延長存活；壓瘡反而可能增加；營養與肺炎也看不出好處，生活品質則沒有研究測量。",mean:"管灌不是「一定要」，也不是「一定不要」。了解研究的限制，和醫師依長輩的狀況與心意一起決定。",src:"Davies N, et al. Cochrane Database Syst Rev. 2021;CD013503",note:"說明「確定性很低」的意思：不是證明沒效，而是目前找不到有效的證據。最後回到「一起決定」。"},
+{t:"points",st:2,pic:"handfeed",tag:"方法",h:"舒適手餵：用手慢慢餵",cols:2,items:[{k:"坐直再餵",v:"上身坐直，下巴微微往下。"},{k:"一小口",v:"湯匙放少一點，慢慢來。"},{k:"等吞乾淨",v:"看喉嚨動了、嘴巴空了，再下一口。"},{k:"挑愛吃的味道",v:"熟悉、喜歡的味道，比較願意張口。"},{k:"口腔保持清潔",v:"飯後清潔口腔，減少細菌嗆進肺裡。"},{k:"不勉強吃完",v:"吃得少是身體在變化，能吃多少算多少。"}],src:"參考美國老年醫學會 2014 年立場聲明（證據等級 5：專家共識）",note:"可以請一位長輩當示範，講師示範坐直、小口、等吞乾淨的節奏。不需要每個人演練，看一次就好。"},
+{t:"spot",st:2,tag:"找找看",h:"末期照顧，這樣做可以嗎？",lead:"逐張看，這樣做，可以嗎？",need:4,cards:[{x:"嗆到還是要把飯吃完",w:1,why:"硬吃會增加嗆進肺的風險。改成看他的狀況，少量多餐，能吃多少算多少。"},{x:"餵食前先讓他坐直",d:1,ok:"坐直讓食物順著下去，降低嗆咳。"},{x:"他沒喊痛，應該不痛",w:1,why:"末期長輩常說不出痛。皺眉、呻吟、身體繃緊、推開別人，都可能是在痛。"},{x:"看表情判斷舒不舒服",d:1,ok:"表情、聲音、身體動作，就是他現在的語言。"},{x:"怕他亂動，整天綁著",w:1,why:"約束會讓長輩更躁動、皮膚受傷。先找原因：痛、尿濕、太熱，並和醫療團隊討論。"},{x:"定時翻身看看皮膚",d:1,ok:"預防壓瘡，也能及早發現紅腫破皮。"},{x:"在床邊討論他的後事",w:1,why:"聽覺可能保留到很後面。重要的事到別處談，床邊說讓他安心的話。"},{x:"嘴唇乾就用棉棒濕潤",d:1,ok:"口乾很難受，保持濕潤能讓他舒服很多。"}],explain:"需要找出 <b>4</b> 張不合適的做法。逐張問：這樣做，可以嗎？",foundLabel:"這樣做不合適。",goodLabel:"這樣做可以。",fb:"末期照顧的重點：不硬吃、會看痛、少約束、床邊說安心的話。",note:"一張一張問全班：這樣做，可以嗎？讓長輩舉手表決再點開。點到合適的做法也沒關係，解說列會說明為什麼它是好方法。"},
+{t:"case",st:2,tag:"藝人故事",h:"侯昌明：急救是為了我，還是為了爸爸？",who:"主持人侯昌明，父親六十多歲開始失智，他一路照顧超過二十年。",facts:["爸爸忘了媽媽已經過世，一直問「你媽呢」。他老實說了一次，爸爸哭得很傷心；後來他改說「媽媽去美國玩了」，爸爸就安心了。","爸爸有時把他當成弟弟，他就順著叫一聲「哥」。他說照顧失智長輩要會「練肖話」，順著走，不要硬碰硬。","爸爸中風送急診，醫師問：要不要急救？他說那一刻非常煎熬，一直問自己：急救是為了我自己，還是真的對爸爸好？","他是主要照顧者，住樓下的哥哥幫忙看顧，另外請了看護和居家服務；遠嫁日本的姊姊親身照顧過一回，才懂有多難。"],lessons:[{k:"順著他，不要糾正他",v:"善意的說法不是說謊，是讓他安心；這也是末期陪伴的態度。"},{k:"急診室不是做決定的好地方",v:"「要不要急救」最好在平常、在清楚的時候就先談過。"},{k:"照顧者要過得比被照顧者好",v:"他說：心臟要強、肩膀要厚，要用資源，別一個人扛。"}],src:"綜合天下雜誌、鏡週刊、CMoney 專訪整理",note:"「急救是為了我還是為了爸爸」這句話，正是第二站的核心。問長輩：如果是你站在急診室外面，你希望自己早就知道爸爸的答案嗎？接著帶入三種治療方向。"},
+{t:"points",st:2,tag:"住院怎麼選",h:"反覆住院，每一次都是選擇題",lead:"沒有對錯，只有「這一次怎麼做，最符合他的心意」。",cols:3,items:[{k:"積極治療",v:"住院、打針，必要時插管、急救，目標是延長生命。"},{k:"有限度治療",v:"治療感染，但不做插管、電擊等侵入性處置。"},{k:"舒適照顧",v:"以不痛、不喘、安心為目標，可在家或機構進行，也可結合安寧照顧。"}],note:"說明三種方向都是合法、正當的選擇，可以和主治醫師討論。重點是：如果長輩自己早就說過想要哪一種，家人就不用在急診室裡掙扎。"},
+{t:"points",st:2,tag:"時事",h:"肺炎，不一定要住院了",lead:"健保 2024 年起試辦「在宅急症照護」，長照 3.0 也接著推：有些感染可以在家或機構治療。",cols:2,items:[{k:"哪三種急症",v:"肺炎、泌尿道感染、皮膚軟組織感染，正好是末期長輩最常反覆發生的。"},{k:"誰可以用",v:"居家醫療的個案、住在照護機構的住民、到急診的失能長輩，經醫師評估病情穩定者。"},{k:"怎麼做",v:"醫護團隊到家裡或機構打抗生素、定期訪視，不用在急診等床、不用一再搬動長輩。"},{k:"對末期家庭的意思",v:"「治療感染」和「留在熟悉的地方」可以同時做到，這就是前一頁說的「有限度治療」。"}],src:"衛生福利部中央健康保險署「在宅急症照護試辦計畫」；遠見雜誌長照 3.0 報導（2026）",note:"這是比較新的制度，各地開辦情況不同。請長輩回家可以問主治醫師或衛生所：「我們家能不能用在宅急症照護？」以醫院說明為準。"},
+{t:"vote",st:2,tag:"想一想",h:"如果是你家的長輩",q:"末期又一次肺炎，醫師問：要不要插管？你希望由誰來決定？",opts:["長輩自己早就說好了","子女兄弟姊妹商量","交給醫師判斷"],note2:"這一題沒有標準答案，舉手就好。",note:"點票後不評論對錯。可以說：選第一個的人，其實就是在說「希望長輩先把話說清楚」。法律上真的有方法做到，下一站就來談。"},
+{t:"case",st:2,tag:"台灣案例",h:"那根鼻胃管：一個全台灣都在討論的家庭",who:"作家瓊瑤的先生平鑫濤，2015 年失智、2016 年中風，當時已 88 歲。",facts:["2016 年，在醫師建議下插了鼻胃管；瓊瑤事後說，看到先生痛苦的樣子，覺得自己背叛了他。","2017 年，她和平先生前一段婚姻的子女，對「要不要繼續用管子延命」意見不同，雙方公開發文，成為那一年全台灣討論「善終」的大事件。","她把這段經歷寫成《雪花飄落之前》，提醒大家趁清楚時先交代。","2019 年，平鑫濤過世，享壽 91 歲。"],lessons:[{k:"沒有誰對誰錯",v:"雙方都認為自己是為他好；差別在他本人從來沒機會說。"},{k:"愛得越深，越容易僵持",v:"最愛的人，往往最難放手，也最怕做錯決定。"},{k:"早一點說，就不用猜",v:"如果平先生清楚時留下決定，家人只要「照他的意思」就好。"}],src:"綜合 2017–2019 年媒體報導（今周刊、鏡週刊、關鍵評論網）",note:"講這個案例要特別中立，不評論任何一方；只講「他本人沒機會說」這一點。在座長輩多半記得這則新聞，可以先問：有沒有人記得？他們為了什麼事意見不同？然後帶入第三站：法律其實已經給了我們工具。"},
+{t:"section",st:3,pic:"st3-card",h:"第三站｜預立醫療：法律怎麼保障我",lead:"《病人自主權利法》2019 年上路，讓我的決定，在我說不出口時也算數。",note:"轉場。說明這一站會有比較多名詞，但每個都會用白話解釋。"},
+{t:"points",st:3,pic:"acp-table",tag:"三個名詞",h:"三個常聽到的名詞",cols:1,items:[{k:"預立醫療照護諮商（ACP）",v:"和醫療團隊、家人一起談：在哪些狀況下，我要或不要哪些醫療。"},{k:"預立醫療決定（AD）",v:"談完後簽下的書面決定，經見證或公證，註記在健保卡上。"},{k:"安寧緩和醫療意願書",v:"表達末期臨終時不急救的意願，不用諮商，填紙本或在衛福部網站線上簽署，一樣註記健保卡。"}],note:"用一句話區分：ACP 是「談」的過程，AD 是談完「簽」的結果。安寧意願書範圍比較窄，主要是臨終時要不要急救。ACP、AD 是英文縮寫，長輩記中文名稱就好。"},
+{t:"points",st:3,tag:"法律規範",h:"台灣保障善終的法律",lead:"常聽到的「善終三法」，加上一條和失智特別有關的民法規定。",cols:2,items:[{k:"安寧緩和醫療條例（2000 年）",v:"末期病人可以事先表達不急救、不做無效延命的意願，簽意願書並註記健保卡。"},{k:"病人自主權利法（2019 年）",v:"範圍更廣：五種臨床狀況下，可事先決定要不要維持生命治療、人工營養與流體餵養。"},{k:"人體器官移植條例",v:"可事先表達器官捐贈意願，一樣註記在健保卡。三法合稱「善終三法」。"},{k:"民法意定監護（2019 年施行）",v:"趁還清楚時，透過公證指定將來失智後幫我管事情、簽文件的監護人，不用等法院指定。"}],src:"全國法規資料庫；衛生福利部",note:"重點放在前兩條的差別：安寧條例只管「末期臨終要不要急救」，病主法連「要不要管灌」都能決定。意定監護是財產與事務，不是醫療，簡單帶過，有興趣的長輩可以去公證處或詢問律師。"},
+{t:"points",st:3,tag:"什麼時候啟動",h:"預立醫療決定，只在這五種狀況啟動",lead:"可以事先選擇接受或拒絕：維持生命的治療、人工營養及流體餵養（例如管灌）。",cols:3,items:[{k:"末期病人",v:"疾病已無法治癒，近期內病程進展到死亡難以避免。"},{k:"不可逆轉的昏迷",v:"昏迷且經醫師確認無法恢復。"},{k:"永久植物人",v:"失去意識、無法自理，經長期觀察恢復機會渺茫。"},{k:"極重度失智",v:"持續意識障礙、無法自理，例如大小便失禁、認不得親友。"},{k:"其他公告的疾病",v:"衛福部公告、痛苦難以忍受且無法治癒的疾病。"},{k:"確認的程序",v:"需二位相關專科醫師確診，並經緩和醫療團隊至少二次照會。"}],src:"病人自主權利法第 14 條",note:"強調最後一張：不是家人說了算、也不是簽了就馬上執行，而是有嚴格的確認程序。這是讓大家放心的地方。"},
+{t:"choice",st:3,tag:"想一想",h:"什麼時候才會照著做？",q:"簽好的預立醫療決定，什麼時候才會真的照著做？",opts:["簽完那天就開始不治療","只要住院醫師就會照做","符合五種狀況並經確診","家人一起同意就能執行"],ans:2,fb:"要符合五種特定狀況，經二位專科醫師確診、緩和醫療團隊照會後才會啟動。平常生病住院，一樣照常治療。",note:"請長輩用手指比選項。公布後再強調一次：簽了不等於現在就放棄治療。"},
+{t:"order",st:3,tag:"排排看",h:"預立醫療決定怎麼完成？",lead:"點選句子，依照辦理的先後順序排列。",items:["打電話預約醫院的諮商門診","邀至少一位二等親家人一起去","和醫療團隊討論各種選擇","簽署決定書，經見證或公證","醫院核章上傳，註記在健保卡"],fb:"二等親像是父母、子女、兄弟姊妹、祖父母、孫子女。也可以指定一位「醫療委任代理人」，在你說不出口時替你表達。",note:"排完後補充：家人一起去很重要，因為將來執行時，家人是最需要知道你心意的人。"},
+{t:"video",st:3,tag:"看影片",h:"羅東博愛醫院：為什麼要簽？QA 一次懂",lead:"宜蘭在地醫院拍的四分鐘短片，把流程和常見問題講清楚。",yt:"gX4hwfLoeno",start:0,vtitle:"為什麼要簽署預立醫療決定？QA問答讓您一次秒懂（羅東博愛醫院）",qs:[{k:"看之前想一想",v:"剛剛排的流程，你記得第一步是什麼？看看醫院怎麼說。"},{k:"看完聊一聊",v:"影片裡哪一個問題，是你本來也想問的？諮商門診裡有哪些人一起談？"},{k:"帶著走",v:"羅東博愛是宜蘭縣衛生局指定的示範醫院，有固定的諮商門診，由醫師、社工師、護理師一起談。回家打一通電話問門診時間，就是第一步。"}],src:"羅東博愛醫院《為什麼要簽署預立醫療決定？QA問答讓您一次秒懂》（2019），YouTube",note:"全長 3 分 55 秒，可以整段播。影片是 2019 年拍的，門診時段與費用以醫院現在的公告為準，下一頁會講健保給付的最新規定。這支影片的好處是「在地」：長輩看到熟悉的醫院會比較有真實感。看完接「在宜蘭哪裡可以做」。"},
+{t:"points",st:3,tag:"在宜蘭",h:"在宜蘭，哪裡可以做？要花錢嗎？",cols:2,items:[{k:"可以詢問的醫院",v:"羅東博愛醫院、羅東聖母醫院、陽明交大附設醫院等，先打電話問門診時間。"},{k:"誰可以簽",v:"成年、意識清楚、能自己做決定的人。越早越好，不用等生病。"},{k:"健保有給付的對象",v:"2024 年 7 月起，輕度失智、符合安寧收案條件等四類對象，諮商納入健保，每人終生一次；2025 年 5 月起再擴大到 65 歲以上重大傷病等。"},{k:"其他人的費用",v:"自費每次約 2,000 到 3,500 元，各醫院不同；部分身分可能有補助，以醫院說明為準。"}],src:"衛生福利部新聞稿（2025）；全國近 13 萬人已完成預立醫療決定（衛福部）",note:"這頁回扣迷思一：輕度失智就診斷出來，健保有給付諮商，等於把決定權留在自己手上。醫院門診與費用會變動，請長輩以醫院或衛生所的最新說明為準。"},
+{t:"stats",st:3,tag:"台灣現況",h:"台灣做到哪裡了？",items:[{n:"近 13 萬",u:"人",d:"完成預立醫療照護諮商、簽下預立醫療決定（衛福部，2026 年 1 月）"},{n:"不到 1%",u:"",d:"相對於全台約 1,960 萬成年人，簽署比率還很低"},{n:"285",u:"家",d:"醫療機構提供預立醫療照護諮商（衛福部，2025）"},{n:"每人 1 次",u:"",d:"符合條件者，諮商費健保終生給付一次（2024 年 7 月起）"}],src:"衛生福利部新聞稿（2025、2026）；中央社、公視報導",note:"兩個訊息：一、很多人還沒做，你不是落後；二、在座的人今天就比 99% 的台灣人多知道一些。下一頁會把這兩年的新聞串起來講。"},
+{t:"points",st:3,tag:"時事",h:"這兩年的新聞，都在講同一件事",lead:"從健保給付到兒童劇，政府和民間都在想辦法讓大家「開口」。",cols:2,items:[{k:"2024 年 7 月",v:"預立醫療照護諮商首次納入健保：輕度失智、符合安寧收案等四類對象，每人終生一次。"},{k:"2025 年 5 月",v:"再加兩類：65 歲以上重大傷病、65 歲以上多重慢性病，估計 180 萬人受惠。"},{k:"2026 年 1 月",v:"病主法七週年，兒童劇《牛爺爺的心願》第一次到外縣市演出，首站就是宜蘭，還結合牛舌餅，讓阿公阿嬤帶孫子一起看。"},{k:"今天",v:"在座各位，就是五結鄉最早把這件事完整聽過一遍的一群人。"}],src:"中央社（2025/4/30）；衛生福利部新聞稿（2026/1）",note:"用牛舌餅連結在地：可以問有沒有人看過、聽過這齣戲。「今天」這一格是鼓勵：回家講給家人聽，就是在幫這件事往前走。"},
+{t:"tf",st:3,tag:"迷思還是事實",h:"迷思五",q:"簽了預立醫療決定，就等於放棄所有治療。",ans:false,fb:"只有在五種特定狀況、經醫師確診後才會啟動；平常生病一樣照常治療。而且可以只拒絕某些項目，例如不插管，但仍然要止痛與舒適照顧。",note:"這是最常見的誤解，公布後可以請長輩跟旁邊的人說一次：簽了不等於放棄治療。"},
+{t:"tf",st:3,tag:"迷思還是事實",h:"迷思六",q:"預立醫療決定簽了就不能改。",ans:false,fb:"可以隨時用書面撤回或變更，再重新註記健保卡。想法會隨著人生改變，很正常。",note:"快速題。答完可以說：所以不用怕「一簽定終身」，先簽一個現在的想法也可以。"},
+{t:"tf",st:3,tag:"迷思還是事實",h:"迷思七",q:"已經診斷失智症，就一定不能簽預立醫療決定。",ans:false,fb:"在輕度階段，如果醫療團隊評估長輩還能理解、表達自己的意願，仍然可以簽，健保也有給付諮商。這就是「早點看醫生」的另一個好處：把決定權留在自己手上。",note:"回扣第一題的伏筆。強調：等到中重度，就很難再自己做決定了，所以時間點很重要。"},
+{t:"tf",st:3,tag:"迷思還是事實",h:"迷思八",q:"簽預立醫療決定，就是安樂死。",ans:false,fb:"台灣目前沒有安樂死。預立醫療決定是在五種特定狀況下「不勉強延命」，改用舒適照顧，讓生命自然走完；安樂死是用藥物主動結束生命，兩者完全不同。2018 年體育主播傅達仁遠赴瑞士的新聞，讓很多人把兩件事混在一起。",note:"這題常被問到。只講定義上的差別，不討論安樂死該不該立法。若長輩追問，可以說：那是另一個議題，今天先把台灣現有的工具用好。"},
+{t:"study",st:3,tag:"研究怎麼說",h:"先說好，對家人有什麼影響？",title:"澳洲預立醫療照護計畫試驗（Detering 等，2010，英國醫學期刊）",lv:"1b",val:"高",quality:"抽籤分組、設計嚴謹；但只在一家醫院，對象是 80 歲以上的住院長者。",who:"309 位 80 歲以上、意識清楚的住院長者。",how:"抽籤分兩組：一組有專人陪著討論、寫下醫療意願，一組照一般照護。",res:"過世的長者中，有做計畫的 86% 心願被尊重，沒做的只有 30%；家屬的壓力、焦慮、憂鬱也較少。",mean:"早點說好，不只是為自己，也是送給家人的禮物：少一點猜測，少一點愧疚。",src:"Detering KM, et al. BMJ. 2010;340:c1345",note:"這是等級較高的研究，可以比較一下前面兩篇的等級。最後一句「送給家人的禮物」慢慢說，帶入下一站。"},
+{t:"case",st:3,tag:"台灣案例",h:"孫越：七十歲送自己的生日禮物",who:"資深藝人、終身義工孫越，2018 年過世，享壽 87 歲。",facts:["2000 年、安寧緩和醫療條例剛通過，他在 70 歲生日那天簽了三份文件送給自己：醫療委任代理人委任書、不施行心肺復甦術意願書、選擇安寧緩和醫療意願書。","太太、兒子、女兒都在場見證，一家人一起把事情說清楚。","他平常就跟朋友、教友聊：告別式要放哪首歌、請誰來唱。","他說：嚴肅的話題，可以輕鬆地談；希望大家打破禁忌，把每一天都當成最後一天好好過。"],lessons:[{k:"挑一個日子",v:"生日、過年都好，把它當成送自己和家人的禮物。"},{k:"家人在場",v:"見證不只是法律程序，是讓家人親耳聽到你的心意。"},{k:"連歌都先點好",v:"心願越具體，家人越容易照著做；這就是我們第五站要做的事。"}],src:"康健雜誌專訪（2003）；公視新聞（2018）",note:"孫越是在座長輩都認識的人，可以先問：記得孫叔叔嗎？他 70 歲就做了今天講的事。帶出「生日簽署」這個具體做法，之後的準備清單會再出現。"},
+{t:"section",st:4,pic:"st4-sofa",h:"第四站｜我的五個希望",lead:"不用紙筆，想一想、點一點，把心意說出口。",note:"轉場。說明這一站不考試、沒有對錯，是想一想自己的心意。"},
+{t:"wish",st:4,tag:"想一想",h:"我的五個希望",lead:"每一題點選最接近你心意的，可以複選，也可以還沒想好。",items:[{k:"誰幫我做醫療決定",opts:["老伴","某一個孩子","全家一起商量","還在想"]},{k:"我要或不要的醫療",opts:["能拚就拚","有機會好轉才拚","舒服最重要","還在想"]},{k:"我希望怎麼舒服",opts:["不痛不喘","身體乾淨","有熟悉的歌","有人陪著"]},{k:"我希望大家怎麼對我",opts:["叫我的名字","握著我的手","跟我說說話","有信仰陪伴"]},{k:"我想讓家人知道",opts:["我愛你們","不要為我吵架","好好照顧自己","謝謝你們"]}],note:"請長輩在心裡選，不用公開。講師可以一題一題念出來，點選講師自己的答案做示範。最後邀請一兩位自願的長輩，分享其中一題就好，不勉強。若單位想要紙本，可以另外準備，現場不一定要發。"},
+{t:"points",st:4,pic:"dinner",tag:"開口三句型",h:"開口三句型",lead:"不用一次講完，先開個頭就好。",cols:1,items:[{k:"一、借題開場",v:"「隔壁阿伯住院了，我在想，如果是我……」「今天去聽了一場講座，我想跟你說……」"},{k:"二、說出希望",v:"「如果有一天我說不出話，我希望……」"},{k:"三、交給對方",v:"「這件事你可以幫我記得嗎？」「你願意當我的醫療委任代理人嗎？」"}],note:"念一次給長輩聽即可，不需要兩兩演練。提醒：「今天去聽了一場講座」就是今天回家最好用的開場白。"},
+{t:"fill",st:4,tag:"句型練習",h:"把希望說清楚",lead:"點選空格，再點上面的詞填進去。",bank:["如果有一天","我希望","你可以","隨便你們","以後再說","你們決定"],lines:[{pre:"",ans:"如果有一天",post:"我不能說話了，"},{pre:"",ans:"我希望",post:"大家讓我舒舒服服的，不要太辛苦。"},{pre:"這件事，",ans:"你可以",post:"幫我記得嗎？"}],fb:"把「隨便你們」「以後再說」換成具體的希望，家人以後才不用猜。",note:"請長輩喊出要填哪個詞，講師點選。填完請全班一起念一遍完整的三句話。"},
+{t:"vote",st:4,tag:"想一想",h:"什麼時候開口？",q:"你覺得哪個時機，最容易跟家人聊這件事？",opts:["過年過節全家都在","看完相關的新聞節目","陪家人看醫生的路上"],note2:"沒有標準答案，選你家最自然的時刻。",note:"點票後請一位長輩說說為什麼選這個時機。可以補充：今天回家，就是一個很好的時機。"},
+{t:"pledge",st:4,tag:"平時怎麼做",h:"從今天開始準備：我做到幾項了？",lead:"點選已經做到的，看看自己走到哪裡；沒做到的就是下一步。",hint:"點選已經做到的項目。",done:"你已經做到 {n} 項。還沒點的，挑一項當這個月的目標。",items:["想好一位醫療委任代理人的人選","跟家人說過一次我對最後一段路的想法","寫下我愛聽的歌、想見的人、信仰的安排","記性有疑慮時，去記憶門診或做過評估","打電話問過醫院的諮商門診","全家挑一天一起去做預立醫療照護諮商","安寧意願書已簽署並註記健保卡","每年挑一天（生日、過年）複習一次"],note:"不用舉手公開，長輩自己在心裡算。講師可以示範點自己做到的幾項。強調：做到 0 項也沒關係，今天聽完就是第 1 項的開始。"},
+{t:"section",st:5,pic:"st5-hand",h:"第五站｜不用說話的陪伴",lead:"到了最後，陪伴不靠道理，靠感覺。",note:"轉場。語氣放慢，這一站是今天最溫柔的部分。"},
+{t:"video",st:5,tag:"看影片",h:"他不太會回答了，還要怎麼聊？",lead:"先看一段陪伴、聊天、互動的畫面，再來學方法。",yt:"S1y4-Xspa6g",start:1351,vtitle:"《無憾—重度與末期失智症之照顧（國語）》",qs:[{k:"看之前想一想",v:"跟一個不太回話的人聊天，你會不會覺得尷尬、不知道說什麼？"},{k:"看完聊一聊",v:"影片裡的人怎麼開口？是問問題，還是說自己的事？他們的語氣、速度、距離有什麼特別？"},{k:"帶著走",v:"不考他、不糾正他；用「說」代替「問」：「爸，今天天氣很好，我剛去買菜。」慢一點、靠近一點、一次一句，等他的表情。"}],src:"社團法人台灣失智症協會《無憾—重度與末期失智症之照顧（國語）》，YouTube",note:"從 22 分 31 秒開始播，看完陪伴互動段落即可。看完先問長輩：影片裡他們講話的速度跟我們平常比，快還是慢？帶出「慢、近、短、等」四個字，接著進五感陪伴。"},
+{t:"points",st:5,pic:"five-senses",tag:"五感陪伴",h:"用五種感覺陪伴",cols:2,items:[{k:"觸覺",v:"握手、輕撫手背、擦乳液按一按。"},{k:"聽覺",v:"熟悉的聲音，他年輕時愛聽的老歌。"},{k:"嗅覺",v:"熟悉的味道：香皂、花露水、家裡的飯菜香。"},{k:"視覺",v:"柔和的光線、老照片、家人的臉。"},{k:"口腔與味覺",v:"保持濕潤清潔；能不能沾一點喜歡的味道，先問醫療團隊。"},{k:"小提醒",v:"一次一種就好，看他的反應調整；皺眉、躁動就停。"}],note:"每個感覺請長輩想一想：自己最喜歡什麼味道、什麼聲音？這也可以放進「五個希望」裡告訴家人。"},
+{t:"video",st:5,tag:"看影片",h:"都已經中重度了，為什麼還要做這麼多？",lead:"帶他出門曬太陽，值得嗎？聽聽照顧現場怎麼說。",yt:"S1y4-Xspa6g",start:701,vtitle:"《無憾—重度與末期失智症之照顧（國語）》",qs:[{k:"看之前想一想",v:"有人會說「他都不認得人了，做這些有什麼用」。你怎麼看？"},{k:"看完聊一聊",v:"影片裡的長輩出門曬太陽之後，哪裡不一樣了？睡眠、心情，還是跟人的互動？"},{k:"帶著走",v:"他感覺得到。早上曬一點太陽，晚上比較好睡、日夜比較不顛倒；推輪椅到門口、窗邊也算。"}],src:"社團法人台灣失智症協會《無憾—重度與末期失智症之照顧（國語）》，YouTube",note:"從 11 分 41 秒開始播，看完這一段即可。這頁回答很多家屬心裡的問題：做這些不是為了讓他「好起來」，是讓他今天舒服一點、晚上睡好一點，照顧的人也跟著輕鬆。曬太陽請避開中午，早上或傍晚十到二十分鐘就好，記得補水。看完接音樂研究。"},
+{t:"video",st:5,tag:"看影片",h:"坐輪椅、臥床了，還能出門嗎？",lead:"重度失能的長輩出一趟門很費力，但換來的，常常比想像多。",yt:"S1y4-Xspa6g",start:1198,vtitle:"《無憾—重度與末期失智症之照顧（國語）》",qs:[{k:"看之前想一想",v:"家裡如果有臥床的長輩，上一次帶他出門是什麼時候？是什麼讓你猶豫？"},{k:"看完聊一聊",v:"影片裡的長輩出門後，表情、話、食慾、睡眠有什麼改變？照顧者又是怎麼克服搬運、交通的困難？"},{k:"帶著走",v:"出門不一定要去遠的地方：到巷口、廟口、菜市場繞一圈，聞到味道、聽到人聲，就是刺激。長照的交通接送與復康巴士可以幫忙。"}],src:"社團法人台灣失智症協會《無憾—重度與末期失智症之照顧（國語）》，YouTube",note:"從 19 分 58 秒開始播，看完外出段落即可。和前一頁「曬太陽」合起來講：出門等於同時給了光線、聲音、味道、人。提醒可用 1966 申請交通接送、喘息服務，宜蘭也有復康巴士；臥床長輩可先從推到門口、院子開始。看完接音樂研究。"},
+{t:"study",st:5,tag:"研究怎麼說",h:"音樂對失智長輩有幫助嗎？",title:"考科藍（Cochrane）系統性回顧：音樂介入與失智症（van der Steen 等，2025 年更新版）",lv:"1a",val:"高；憂鬱的結果確定性中等，其他偏低",quality:"統合 30 個抽籤分組試驗；多在照護機構進行、每篇人數不大，專門針對末期的研究很少。",who:"多數住在照護機構的失智長輩，共 30 篇研究、1,720 人。",how:"比較參加音樂活動（聽、唱、打拍子，個別或團體）與一般照護的差別。",res:"很可能改善憂鬱情緒，也可能改善整體行為問題；對躁動不安的效果不明顯；結束四週後效果可能變小。",mean:"音樂不是治療，而是讓他安心的一種陪伴方式；放什麼、放多久，看他當下的反應決定，而且要持續放，不是放一次就好。",src:"van der Steen JT, et al. Cochrane Database Syst Rev. 2025;CD003477",note:"說明「等級高、憂鬱的確定性中等」：方法是最好的那一種，研究也比以前多了，但針對末期的仍然很少。下一頁用東尼班尼特的故事，再進入點歌時間。"},
+{t:"video",st:5,tag:"看影片",h:"一首老歌，讓他回到安心的年代",lead:"研究說音樂可能有幫助，現場看起來是什麼樣子？",yt:"S1y4-Xspa6g",start:801,vtitle:"《無憾—重度與末期失智症之照顧（國語）》",qs:[{k:"看之前想一想",v:"你年輕時最常哼的是哪一首歌？現在聽到前奏，心情會不會不一樣？"},{k:"看完聊一聊",v:"影片裡放老歌的時候，長輩的表情、身體有什麼變化？是放鬆、跟著哼，還是想起了誰？"},{k:"帶著走",v:"老歌是通往他年輕時代的門：熟悉的旋律帶來安全感，也帶出回憶和話題。放他的歌，不是放我們的歌。"}],src:"社團法人台灣失智症協會《無憾—重度與末期失智症之照顧（國語）》，YouTube",note:"從 13 分 21 秒開始播，看完音樂段落即可。看完先問：有沒有人看到長輩跟著動嘴、打拍子？再接東尼班尼特的故事與老歌點播站。提醒家屬：歌要挑他十幾二十歲時流行的，音量小一點，一次一兩首，看反應。"},
+{t:"case",st:5,tag:"藝人故事",h:"東尼班尼特：忘了很多事，卻沒忘記一首歌",who:"美國老牌歌手東尼班尼特（Tony Bennett），2016 年診斷阿茲海默症，2023 年過世，享耆壽 96 歲。",facts:["2021 年 8 月、95 歲生日那幾天，他和女神卡卡（Lady Gaga）在紐約無線電城音樂廳開告別演唱會。","排練時他已經認不得天天合作的卡卡，只叫她「甜心」；卡卡說她不確定他知不知道自己是誰。","可是音樂一下，他整場歌詞都記得，節奏、停頓一個都不少。卡卡說：「音樂一開始，他整個人就變了。」","卡卡走上台時，他突然喊出：「哇，Lady Gaga！」那是很久以來他第一次叫出她的名字，卡卡在台上強忍著眼淚。"],lessons:[{k:"音樂的記憶留得最久",v:"年輕時刻在心裡的歌，往往到很後面還在。"},{k:"不用認得我，也可以一起唱",v:"陪伴的目標不是讓他「認出我」，而是讓他此刻安心、開心。"},{k:"他的那首歌，要先問清楚",v:"你的「那首歌」是什麼？這就是下一頁要做的事。"}],src:"CBS《60 分鐘》專訪（2021）；好萊塢報導；PinkNews",note:"可以先問長輩：有沒有一首歌，一聽前奏就會跟著哼？那就是你的「東尼班尼特時刻」。講完直接進老歌點播站。"},
+{t:"vote",st:5,tag:"老歌點播站",h:"老歌點播站",q:"如果有一天要陪伴你，你希望家人放哪一首？",opts:["丟丟銅仔","望春風","月亮代表我的心","綠島小夜曲"],note2:"舉手點歌，也可以喊出你心中的那一首。",note:"讓長輩舉手點歌，講師點按鈕記票。可以邀請大家一起哼兩句票數最高的歌。提醒：把這首歌告訴家人，就是一個具體的希望。"},
+{t:"video",st:5,tag:"現場聽一聽",h:"來，一起聽一分鐘：四月望雨",lead:"鄧雨賢的四首歌：四季紅、月夜愁、望春風、雨夜花。鋼琴版，沒有歌詞，剛好用來安撫。",yt:"fL5vZe6cHoc",start:0,vtitle:"四月望雨｜四季紅、月夜愁、望春風、雨夜花 鋼琴演奏",qs:[{k:"聽的時候",v:"閉上眼睛，不用想事情，只注意身體有沒有慢慢放鬆下來。"},{k:"聽完聊一聊",v:"前奏一出來，你想到了誰、想到了哪一年？這就是老歌帶來的安全感。"},{k:"帶著走",v:"像這樣沒有歌詞的鋼琴版、慢板的老歌，很適合末期臥床時小聲放著，陪伴又不吵。"}],src:"PaPa的鋼琴作業《四月望雨》鋼琴演奏，YouTube",note:"真的播一分鐘左右就好，請大家閉眼聽，講師也不要說話。停下來後先安靜兩三秒，再問：剛剛想到了誰？這一頁是給長輩「親身感覺」前面講的事，不用講道理。回家可以把這類影片存在手機裡，陪伴時隨手就能放。"},
+{t:"points",st:5,tag:"舒適照顧",h:"舒適照顧四原則",cols:2,four:true,items:[{k:"不痛不喘",v:"留意表情和聲音，有不舒服就請醫療團隊處理。"},{k:"乾淨濕潤",v:"口腔、皮膚保持清潔濕潤，定時翻身。"},{k:"安靜安心",v:"減少不必要的打擾與聲光，熟悉的人陪著。"},{k:"好好道別",v:"道謝、道歉、道愛、道別，也就是常說的「四道人生」。"}],note:"講到「好好道別」時停一下，問長輩：有沒有一句話，是想對家人說、但還沒說的？不用說出來，心裡想就好。"},
+{t:"video",st:5,tag:"看影片",h:"投其所好：他喜歡的，就是最好的照顧",lead:"躁動常常不是病，是無聊、不舒服、或沒有人懂他。",yt:"S1y4-Xspa6g",start:886,vtitle:"《無憾—重度與末期失智症之照顧（國語）》",qs:[{k:"看之前想一想",v:"你家的長輩，這輩子最愛做什麼？種菜、拜拜、打牌、唱歌，還是抱孫子？"},{k:"看完聊一聊",v:"影片裡的照顧者怎麼找到長輩的喜好？找到以後，長輩的情緒有什麼不同？"},{k:"帶著走",v:"把他一輩子的習慣縮小版留在生活裡：愛種菜的摸摸土、愛拜拜的聞聞香、愛做菜的剝剝菜。心情好，躁動自然少。"}],src:"社團法人台灣失智症協會《無憾—重度與末期失智症之照顧（國語）》，YouTube",note:"從 14 分 46 秒開始播，看完「投其所好」段落即可。看完請長輩想一想「我自己最愛做什麼」，這也可以放進第四站的五個希望裡告訴家人。提醒家屬：喜好要從他年輕時的生活找，不是我們覺得好的活動；做不到完整版，就做縮小版、感覺版。看完接大魔王題。"},
+{t:"spot",st:5,tag:"大魔王",h:"陪伴的時候，這樣做可以嗎？",lead:"逐張看，這樣做，可以嗎？",need:5,cards:[{x:"他沒反應，就不跟他說話",w:1,why:"聽覺可能保留很久。繼續叫他的名字，說說今天的事。"},{x:"放他年輕時愛聽的歌",d:1,ok:"熟悉的旋律能帶來安心感。"},{x:"電視開大聲幫他提神",w:1,why:"太吵會讓人不安。換成小聲、熟悉的音樂。"},{x:"握著手說：我在這裡",d:1,ok:"觸覺加上熟悉的聲音，是最直接的陪伴。"},{x:"一直問：你認得我嗎",w:1,why:"像考試會讓他有壓力。直接說：「爸，我是阿明，我來陪你。」"},{x:"用棉棒濕潤他的嘴唇",d:1,ok:"減少口乾的不舒服。"},{x:"怕他餓，硬塞一口飯",w:1,why:"末期吃得少是身體需求在減少，硬塞容易嗆。濕潤嘴唇也是照顧。"},{x:"說謝謝、我愛你、再見",d:1,ok:"四道人生，讓彼此都少一點遺憾。"},{x:"在床邊為分工吵架",w:1,why:"情緒他感覺得到。有不同意見，到病房外好好談。"}],explain:"需要找出 <b>5</b> 張不合適的做法。逐張問：這樣做，可以嗎？",foundLabel:"這樣做不合適。",goodLabel:"這樣做可以。",fb:"陪伴的重點：繼續說話、聲音柔和、不考他、不硬塞、不在床邊吵。",note:"大魔王題。逐張問全班，舉手表決再點。找完可以請長輩說說，哪一張自己以前也做過，現在知道可以怎麼改。"},
+{t:"video",st:5,tag:"看影片",h:"陪你到最後：最後一段路的安寧",lead:"今天的最後一段影片，安靜地看完就好。",yt:"S1y4-Xspa6g",start:1456,vtitle:"《無憾—重度與末期失智症之照顧（國語）》",qs:[{k:"看的時候",v:"不用記重點。想一個人：你最想陪他走到最後的那個人，或你希望陪在你身邊的那個人。"},{k:"看完聊一聊",v:"影片裡的家人，最後做了什麼、說了什麼？他們看起來遺憾嗎？為什麼？"},{k:"帶著走",v:"安寧不是放棄，是換一種照顧：不痛、乾淨、有人握著手、該說的話都說了。這些，今天就可以開始準備。"}],src:"社團法人台灣失智症協會《無憾—重度與末期失智症之照顧（國語）》，YouTube",note:"從 24 分 16 秒開始播到影片結束前的安寧段落，大約三到五分鐘，視時間而定。這是今天情緒最深的一頁：播完不要馬上講話，停個五秒，再輕聲問一句「有沒有人想說說」。不勉強分享。接著進承諾牆，把情緒變成一件回家會做的事。"},
+{t:"pledge",tag:"承諾牆",h:"回家以後，我願意試試看",lead:"點選你願意試的，不用全部。",items:["跟家人聊一次最後想怎麼過","想好誰當我的醫療委任代理人","打電話問醫院諮商門診","邀家人一起去做諮商","把我愛聽的歌告訴家人","跟家人說一次謝謝","陪長輩看醫生時多問一句","把今天學的告訴一位朋友"],note:"請幾位長輩說出他選的那一項。不用全部分享，自願就好。"},
+{t:"points",tag:"資源",h:"需要的時候，可以找誰",cols:2,items:[{k:"1966 長照專線",v:"長照服務、居家照顧、喘息服務的申請與諮詢。"},{k:"0800-474-580 失智關懷專線",v:"台灣失智症協會，諧音「失智時，我幫您」。"},{k:"五結鄉衛生所",v:"社區健康講座、資源轉介，在地最近的窗口。"},{k:"0800-220-927 安寧諮詢專線",v:"台灣安寧照顧協會，諧音「愛安寧，就安心」；安寧居家、共照都可以問。"}],note:"請長輩把 1966 記起來。衛生所的聯絡方式可以請衛生所人員現場補充。"},
+{t:"section",pic:"sunset-walk",h:"好好走完最後一哩路",lead:"從今天好好說一次開始。說出口的希望，是留給家人最溫柔的禮物。",note:"結語：肯定長輩一輩子照顧家人的智慧。最後一段路，換我們把心意說清楚，讓家人能好好照顧我們。"},
+{t:"points",tag:"綜合討論",h:"大家常問的四個問題",lead:"有任何想問的，現在都可以問。",cols:2,items:[{k:"家人意見不同怎麼辦？",v:"回到「如果他能說話，他會怎麼選」；必要時請醫院安排家庭會議。"},{k:"長輩不想談，怎麼開口？",v:"不勉強。先從「我自己」的希望說起，給他時間。"},{k:"已經住在機構，還能做什麼？",v:"和機構、主治醫師討論照顧目標，安寧團隊也可以到機構服務。"},{k:"管子放了還能拿掉嗎？",v:"要看身體狀況與當初的醫療決定，和醫師討論，可以再評估。"}],note:"先用這四題暖場，再開放現場提問。遇到個別醫療問題，建議回到主治醫師討論，不在現場下判斷。"},
+{t:"score",tag:"結束",h:"今天的星星",lead2:"重點不是分數，是回家好好說一次。",note:"公布星星數，謝謝大家。提醒：今天回家，就用「今天去聽了一場講座」開個頭。"}
+]};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let cur=0,stars=0,maxStars=0;const state={};const stage=document.getElementById('stage');
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+/* ===== 音效（Web Audio 合成，不需外部檔案） ===== */
+let AC=null,muted=false;
+function ac(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return null}}if(AC.state==='suspended')AC.resume();return AC}
+function tone(f,t0,dur,type,vol){const a=ac();if(!a||muted)return;const t=a.currentTime+t0,o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol||.15,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+dur+.05)}
+function whoosh(){const a=ac();if(!a||muted)return;const len=.35,b=a.createBuffer(1,a.sampleRate*len,a.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(1-i/d.length);const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain(),t=a.currentTime;s.buffer=b;f.type='bandpass';f.Q.value=1.2;f.frequency.setValueAtTime(400,t);f.frequency.exponentialRampToValueAtTime(2400,t+len);g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+len);s.connect(f);f.connect(g);g.connect(a.destination);s.start(t)}
+const SFX={
+ click:()=>tone(720,0,.09,'triangle',.12),
+ flip:whoosh,
+ ok:()=>[523,659,784,1047].forEach((f,k)=>tone(f,k*.09,.35,'triangle',.15)),
+ no:()=>{tone(392,0,.22,'sine',.14);tone(311,.16,.4,'sine',.14)},
+ star:()=>[1319,1760,2093].forEach((f,k)=>tone(f,k*.07,.4,'sine',.1)),
+ vote:()=>tone(980,0,.07,'square',.05),
+ chime:()=>[392,523,659].forEach((f,k)=>tone(f,k*.18,1.2,'sine',.09))
+};
+const sndBtn=document.getElementById('sndBtn');
+sndBtn.onclick=()=>{muted=!muted;sndBtn.textContent=muted?'🔇':'🔊';if(!muted)SFX.click()};
+
+function popup(ok,title,fb){const a=document.getElementById('ans');document.getElementById('ansT').textContent=title;document.getElementById('ansT').className='ttl '+(ok?'ok':'no');document.getElementById('ansF').innerHTML=fb;a.classList.add('on');(ok?SFX.ok:SFX.no)();document.getElementById('ansB').focus({preventScroll:true});document.getElementById('ansB').onclick=()=>{a.classList.remove('on');SFX.click()}}
+function flyStar(){const el=document.createElement('div');el.className='flystar';el.textContent='★';const sb=document.getElementById('stars').getBoundingClientRect();el.style.left='50%';el.style.top='45%';el.style.setProperty('--tx',(sb.left+sb.width/2-innerWidth/2)+'px');el.style.setProperty('--ty',(sb.top-innerHeight*.45)+'px');document.body.appendChild(el);setTimeout(()=>el.remove(),1200)}
+function star(i){if(!state[i].star){state[i].star=true;stars++;setTimeout(()=>{flyStar();SFX.star();renderStars();const s=document.getElementById('stars');s.classList.remove('bump');void s.offsetWidth;s.classList.add('bump')},250)}}
+function renderStars(){document.getElementById('stars').textContent=`★ ${stars} / ${maxStars}`}
+
+function road(st){if(!st)return'';const N=DECK.stations;return `<div class="road" aria-label="第${st}站，共${N.length}站">${N.map((n,k)=>`${k?`<span class="seg ${k<st?'done':''}"></span>`:''}<span class="st ${k+1<st?'done':''} ${k+1===st?'cur':''}"><span class="dot"></span><span>${esc(n)}</span></span>`).join('')}</div>`}
+function head(s){return `${road(s.st)}${s.tag?`<span class="tag">${esc(s.tag)}</span>`:''}<h1>${esc(s.h)}</h1>${s.lead?`<p class="lead">${esc(s.lead)}</p>`:''}`}
+const LVCOL={"1a":"#028090","1b":"#1B8F7A","2a":"#5E8C3A","2b":"#A8650A","3–4":"#C2411E","5":"#7A6C6C"};
+const sym=['Ａ','Ｂ','Ｃ','Ｄ'];
+
+function picSrc(n){return PICS[n]||('img/'+n+'.jpg')}
+function picEl(n){return `<div class="pic"><img src="${picSrc(n)}" alt="" onerror="dropPic(this)"></div>`}
+function dropPic(img){const sl=img.closest('.slide');const w=img.closest('.withpic');img.closest('.pic').remove();if(w){const b=w.querySelector('.body');w.replaceWith(b)}sl.classList.remove('haspic');if(sl.classList.contains('on'))fit(sl)}
+function build(s,i){
+ const d=document.createElement('div');d.className='slide '+s.t;d.dataset.i=i;state[i]={};
+ switch(s.t){
+ case 'cover':d.innerHTML=`<div class="sun"></div><svg class="path" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true"><path d="M380 400 C 450 300, 560 260, 500 120 L 505 120 C 600 260, 640 300, 620 400 Z" fill="rgba(18,52,59,.35)"/><path class="road-line" d="M500 400 C 520 300, 560 230, 503 125" fill="none" stroke="#FCE3B8" stroke-width="6" stroke-linecap="round"/></svg><div class="txt"><div class="sub">${esc(s.sub)}</div><h1>${esc(s.h)}</h1><p class="lead">${esc(s.lead)}</p><div class="who">${esc(s.who)}</div></div>`;break;
+ case 'section':if(!s.st)d.classList.add('final');if(s.pic){d.classList.add('haspic');d.innerHTML=`${road(s.st)}<div class="sec2">${picEl(s.pic)}<div class="txt"><h1>${esc(s.h)}</h1><p class="lead">${esc(s.lead||'')}</p></div></div>`}else d.innerHTML=`${road(s.st)}<h1>${esc(s.h)}</h1><p class="lead">${esc(s.lead||'')}</p>`;break;
+ case 'points':{const grid=`<div class="grid" style="grid-template-columns:repeat(${s.cols||2},1fr)">${s.items.map(it=>`<div class="card"><div class="k">${esc(it.k)}</div><div class="v">${esc(it.v)}</div></div>`).join('')}</div>${s.src?`<div class="note-src">資料：${esc(s.src)}</div>`:''}`;
+  d.innerHTML=head(s)+(s.pic?`<div class="withpic">${picEl(s.pic)}<div class="body">${grid}</div></div>`:`<div class="body">${grid}</div>`);break;}
+ case 'timeline':{const cols=['#7FB8B3','#028090','#A8650A','#C2411E','#5E5A8C'];d.innerHTML=head(s)+`<div class="body"><div class="tl">${s.steps.map((x,k)=>`<div class="step"><div class="n" style="background:${cols[k%5]}">${k+1}</div><div class="k">${esc(x.k)}</div><div class="v">${esc(x.v)}</div></div>`).join('')}</div>${s.src?`<div class="note-src">資料：${esc(s.src)}</div>`:''}</div>`;break}
+ case 'levels':d.innerHTML=head(s)+`<div class="body"><div class="lvs">${s.items.map(x=>`<div class="lvr"><div class="b" style="background:${LVCOL[x.lv]}">${esc(x.lv)}</div><div class="k">${esc(x.k)}</div><div class="v" style="color:${LVCOL[x.lv]}">參考價值：${esc(x.v)}</div></div>`).join('')}</div><div class="foot">${esc(s.foot)}</div>${s.src?`<div class="note-src">資料：${esc(s.src)}</div>`:''}</div>`;break;
+ case 'study':d.innerHTML=head(s)+`<div class="body"><div class="sth"><div><div class="tt">${esc(s.title)}</div><div class="qq">研究品質：${esc(s.quality)}</div></div><div class="badge" style="background:${LVCOL[s.lv]||'#028090'}"><div class="l1">證據等級</div><div class="l2">${esc(s.lv)}</div><div class="l3">參考價值：${esc(s.val)}</div></div></div><div class="st3"><div class="card"><div class="k">研究對象</div><div class="v">${esc(s.who)}</div></div><div class="card"><div class="k">怎麼比較</div><div class="v">${esc(s.how)}</div></div><div class="card"><div class="k">結果</div><div class="v">${esc(s.res)}</div></div></div><div class="mean"><b>對我們的意思：</b>${esc(s.mean)}</div><div class="note-src">出處：${esc(s.src)}</div></div>`;break;
+ case 'tf':maxStars++;d.innerHTML=head(s)+`<div class="body"><div class="tfq">${esc(s.q)}</div><div class="tfb"><button class="yes" data-v="1"><span class="ic">○</span>對</button><button class="no" data-v="0"><span class="ic">✕</span>不對</button></div></div>`;
+  d.querySelectorAll('.tfb button').forEach(b=>b.onclick=()=>{if(state[i].done)return;state[i].done=1;SFX.click();const v=b.dataset.v==='1',ok=v===s.ans;d.querySelectorAll('.tfb button').forEach(x=>{x.disabled=true;const xv=x.dataset.v==='1';if(xv===s.ans)x.classList.add('right');else if(x===b)x.classList.add('wrong')});
+   setTimeout(()=>{popup(ok,ok?'答對了！':'這是迷思喔',`<b>正確答案：${s.ans?'○ 對':'✕ 不對'}</b><br>${esc(s.fb)}`);if(ok)star(i)},800)});break;
+ case 'choice':maxStars++;d.innerHTML=head(s)+`<div class="body"><div class="q">${esc(s.q)}</div><div class="opts">${s.opts.map((o,k)=>`<button class="opt" data-k="${k}"><b>${sym[k]}</b><span>${esc(o)}</span></button>`).join('')}</div></div>`;
+  d.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(state[i].done)return;state[i].done=1;SFX.click();const k=+b.dataset.k,ok=k===s.ans;
+   d.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.k===s.ans)x.classList.add('right');else if(+x.dataset.k===k)x.classList.add('wrong')});
+   setTimeout(()=>{popup(ok,ok?'答對了！':'再想想',`<b>正確答案：${sym[s.ans]}</b><br>${esc(s.fb)}`);if(ok)star(i)},800)});break;
+ case 'vote':d.innerHTML=head(s)+`<div class="body"><div class="q">${esc(s.q)}</div><div class="opts" style="grid-template-columns:repeat(${s.opts.length},1fr)">${s.opts.map((o,k)=>`<button class="opt" data-k="${k}"><b>0</b><span>${esc(o)}</span></button>`).join('')}</div><div class="btnrow"><button class="btn ghost" id="vr${i}">票數歸零</button></div><div class="explain">${esc(s.note2||'舉手投票，講師點選記錄票數。這一題沒有標準答案。')}</div></div>`;
+  d.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const el=b.querySelector('b');el.textContent=+el.textContent+1;el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');SFX.vote()});
+  d.querySelector('#vr'+i).onclick=()=>{d.querySelectorAll('.opt b').forEach(e=>e.textContent='0');SFX.click()};break;
+ case 'spot':maxStars++;state[i].found=0;
+  d.innerHTML=head(s)+`<div class="body"><div class="cards ${s.cards.length>8?'nine':''}">${s.cards.map((c,k)=>`<button class="sc" data-k="${k}">${esc(c.x)}</button>`).join('')}</div><div class="explain" id="ex${i}">${s.explain}</div></div>`;
+  d.querySelectorAll('.sc').forEach(b=>b.onclick=()=>{const c=s.cards[+b.dataset.k],ex=d.querySelector('#ex'+i);if(b.classList.contains('found')||b.classList.contains('good'))return;
+   if(c.w){b.classList.add('found');state[i].found++;SFX.no();ex.innerHTML=`<b>${esc(s.foundLabel)}</b>${esc(c.why)}　（已找到 ${state[i].found} / ${s.need}）`;
+    if(state[i].found>=s.need){setTimeout(()=>{popup(true,'全部找到了！',esc(s.fb));star(i)},900)}}
+   else{b.classList.add('good');SFX.ok();ex.innerHTML=`<b>${esc(s.goodLabel)}</b>${esc(c.ok)}`}fit(d)});break;
+ case 'fill':maxStars++;
+  d.innerHTML=head(s)+`<div class="body"><div class="bank">${shuffle(s.bank).map(w=>`<button data-w="${esc(w)}">${esc(w)}</button>`).join('')}</div><div class="lines">${s.lines.map((l,k)=>`<div class="line">${esc(l.pre)}<span class="blank" data-k="${k}">　</span>${esc(l.post)}</div>`).join('')}</div><div class="btnrow"><button class="btn" id="chk${i}">檢查答案</button><button class="btn ghost" id="rst${i}">重來</button></div></div>`;
+  {let active=null;const blanks=d.querySelectorAll('.blank');
+  blanks.forEach(b=>b.onclick=()=>{blanks.forEach(x=>x.classList.remove('active'));b.classList.add('active');active=b;SFX.click()});
+  d.querySelectorAll('.bank button').forEach(w=>w.onclick=()=>{SFX.click();if(!active){active=[...blanks].find(b=>b.textContent.trim()==='')||blanks[0];active.classList.add('active')}active.textContent=w.dataset.w;active.classList.remove('ok','bad');const nxt=[...blanks].find(b=>b.textContent.trim()==='');blanks.forEach(x=>x.classList.remove('active'));active=nxt||null;if(active)active.classList.add('active');fit(d)});
+  d.querySelector('#rst'+i).onclick=()=>{blanks.forEach(b=>{b.textContent='　';b.className='blank'});active=null;SFX.click()};
+  d.querySelector('#chk'+i).onclick=()=>{let ok=0;blanks.forEach(b=>{const r=b.textContent.trim()===s.lines[+b.dataset.k].ans;b.classList.add(r?'ok':'bad');if(r)ok++});
+   setTimeout(()=>{const all=ok===s.lines.length;popup(all,all?'全部正確！':`答對 ${ok} / ${s.lines.length}`,esc(s.fb)+(all?'':'<br>藍色是正確，橘色再試一次。'));if(all)star(i)},700)}}break;
+ case 'order':maxStars++;state[i].seq=[];
+  {const items=shuffle(s.items.map((x,k)=>({x,k})));
+  d.innerHTML=head(s)+`<div class="body"><div class="olist">${items.map(it=>`<button class="ob" data-k="${it.k}"><b>？</b><span>${esc(it.x)}</span></button>`).join('')}</div><div class="btnrow"><button class="btn ghost" id="rst${i}">重來</button></div></div>`;
+  const obs=d.querySelectorAll('.ob');
+  obs.forEach(b=>b.onclick=()=>{if(b.classList.contains('picked')||state[i].done)return;SFX.click();state[i].seq.push(+b.dataset.k);b.classList.add('picked');b.querySelector('b').textContent=state[i].seq.length;
+   if(state[i].seq.length===s.items.length){state[i].done=1;let ok=0;obs.forEach(x=>{const pos=state[i].seq.indexOf(+x.dataset.k);const r=pos===+x.dataset.k;x.classList.add(r?'ok':'bad');if(r)ok++});
+    setTimeout(()=>{const all=ok===s.items.length;popup(all,all?'順序正確！':`有 ${ok} 句位置正確`,`<b>正確順序：</b><br>${s.items.map((x,k)=>`${k+1}. ${esc(x)}`).join('<br>')}<br><br>${esc(s.fb)}`);if(all)star(i)},800)}});
+  d.querySelector('#rst'+i).onclick=()=>{state[i].seq=[];state[i].done=0;SFX.click();obs.forEach(x=>{x.className='ob';x.querySelector('b').textContent='？'})}}break;
+ case 'wish':d.innerHTML=head(s)+`<div class="body"><div class="wl">${s.items.map((w,k)=>`<div class="wr"><div class="k"><i>${k+1}</i>${esc(w.k)}</div><div class="chips">${w.opts.map(o=>`<button>${esc(o)}</button>`).join('')}</div></div>`).join('')}</div></div>`;
+  d.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>{b.classList.toggle('on');b.classList.contains('on')?SFX.vote():SFX.click()});break;
+ case 'pledge':{const hint=s.hint||'點選你願意這週試試看的，不用全部。',done=s.done||'你選了 {n} 項。挑一項，說說看你會先跟誰做。';
+  d.innerHTML=head(s)+`<div class="body"><div class="pl">${s.items.map(x=>`<button>${esc(x)}</button>`).join('')}</div><div class="explain" id="pc${i}">${esc(hint)}</div></div>`;
+  d.querySelectorAll('.pl button').forEach(b=>b.onclick=()=>{b.classList.toggle('on');SFX.vote();const n=d.querySelectorAll('.pl button.on').length;const t=esc(done).replace('{n}',n);const j=t.indexOf('。');d.querySelector('#pc'+i).innerHTML=n?`<b>${t.slice(0,j+1)}</b>${t.slice(j+1)}`:esc(hint)});break;}
+ case 'case':d.innerHTML=head(s)+`<div class="body"><div class="who">${esc(s.who)}</div><div class="case2"><div class="facts">${s.facts.map((f,k)=>`<div class="fact"><b>${k+1}</b><span>${esc(f)}</span></div>`).join('')}</div><div class="lessons"><div class="lt">我們可以學到</div>${s.lessons.map(l=>`<div class="card"><div class="k">${esc(l.k)}</div><div class="v">${esc(l.v)}</div></div>`).join('')}</div></div>${s.src?`<div class="note-src">資料：${esc(s.src)}</div>`:''}</div>`;break;
+ case 'video':d.innerHTML=head(s)+`<div class="body"><div class="vid"><div class="frame"><iframe src="https://www.youtube.com/embed/${s.yt}?start=${s.start}&rel=0" title="${esc(s.vtitle)}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div><div class="grid" style="grid-template-columns:1fr">${s.qs.map(it=>`<div class="card"><div class="k">${esc(it.k)}</div><div class="v">${esc(it.v)}</div></div>`).join('')}</div></div><div class="note-src">影片：${esc(s.src)}</div></div>`;break;
+ case 'stats':d.innerHTML=head(s)+`<div class="body"><div class="statgrid">${s.items.map(x=>`<div class="stat"><div class="n">${esc(x.n)}<small>${esc(x.u||'')}</small></div><div class="d">${esc(x.d)}</div></div>`).join('')}</div>${s.src?`<div class="note-src">資料：${esc(s.src)}</div>`:''}</div>`;break;
+ case 'score':d.innerHTML=head(s)+`<div class="body scorebox"><div class="big" id="final"></div><div class="txt">${esc(s.lead2)}</div></div>`;break;
+ }
+ d.querySelectorAll('.card,.opt,.sc,.ob,.step,.lvr,.wr,.tfb button,.pl button,.line,.sth,.mean,.tfq,.q,.fact,.stat,.who').forEach((e,k)=>{e.classList.add('anim');e.style.setProperty('--d',k)});
+ return d;
+}
+DECK.slides.forEach((s,i)=>stage.appendChild(build(s,i)));renderStars();
+
+function fit(el){const MIN=innerWidth<=760?.62:.4;let lo=MIN,hi=1.8,best=MIN;el.style.overflowY='hidden';
+ for(let n=0;n<11;n++){const mid=(lo+hi)/2;el.style.setProperty('--s',mid);el.style.setProperty('--hs',Math.min(mid,1.16));
+  if(el.scrollHeight<=el.clientHeight+1&&el.scrollWidth<=el.clientWidth+1){best=mid;lo=mid}else hi=mid}
+ el.style.setProperty('--s',best);el.style.setProperty('--hs',Math.min(best,1.16));
+ /* 手機上字不再縮小到看不清；塞不下就讓該頁可以上下捲動 */
+ if(el.scrollHeight>el.clientHeight+1)el.style.overflowY='auto'}
+let first=true;
+function show(i){const prev=cur;cur=Math.max(0,Math.min(DECK.slides.length-1,i));
+ document.querySelectorAll('.slide').forEach((d,k)=>{d.classList.toggle('on',k===cur);d.classList.remove('enter')});
+ const s=DECK.slides[cur];if(s.t==='score'){document.getElementById('final').textContent=`★ ${stars} / ${maxStars}`;if(!first)SFX.chime()}
+ else if(!first&&prev!==cur){s.t==='section'?SFX.chime():SFX.flip()}
+ if(prev!==cur)stage.children[prev].querySelectorAll('iframe').forEach(f=>{f.src=f.src});
+ first=false;
+ const el=stage.children[cur];fit(el);void el.offsetWidth;el.classList.add('enter');
+ document.getElementById('pg').textContent=`${cur+1} / ${DECK.slides.length}`;
+ document.getElementById('note').innerHTML=`<b>講師提示　</b>${esc(s.note||'（本頁沒有提示）')}`;
+ document.getElementById('menu').classList.remove('on');
+ document.querySelectorAll('#menuG button').forEach((b,k)=>b.classList.toggle('cur',k===cur));
+ try{history.replaceState(null,'','#'+(cur+1))}catch(e){}
+}
+document.getElementById('prev').onclick=()=>show(cur-1);
+document.getElementById('next').onclick=()=>show(cur+1);
+document.getElementById('noteBtn').onclick=()=>document.getElementById('note').classList.toggle('on');
+document.getElementById('menuBtn').onclick=()=>document.getElementById('menu').classList.toggle('on');
+document.getElementById('fsBtn').onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}catch(e){}};
+document.getElementById('menuG').innerHTML=DECK.slides.map((s,k)=>`<button>${k+1}. ${esc(s.h)}</button>`).join('');
+document.querySelectorAll('#menuG button').forEach((b,k)=>b.onclick=()=>show(k));
+addEventListener('keydown',e=>{if(document.getElementById('ans').classList.contains('on')){if(e.key==='Enter'||e.key===' '||e.key==='Escape'){document.getElementById('ansB').click();e.preventDefault()}return}
+ if(e.key==='ArrowRight'||e.key==='PageDown'||(e.key===' '&&e.target===document.body)){show(cur+1);e.preventDefault()}else if(e.key==='ArrowLeft'||e.key==='PageUp'){show(cur-1);e.preventDefault()}
+ else if(e.key==='n'||e.key==='N')document.getElementById('note').classList.toggle('on');else if(e.key==='f'||e.key==='F')document.getElementById('fsBtn').click();else if(e.key==='m'||e.key==='M')sndBtn.click();else if(e.key==='Escape')document.getElementById('menu').classList.remove('on')});
+addEventListener('resize',()=>fit(stage.children[cur]));
+let tx=null,ty=null;addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)&&!e.target.closest('button,.blank')&&!document.getElementById('ans').classList.contains('on'))show(cur+(dx<0?1:-1));tx=null},{passive:true});
+const h0=parseInt(location.hash.slice(1));show(h0?h0-1:0);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fit(stage.children[cur]));
+
+</script>
+</body>
+</html>
